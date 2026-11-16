@@ -1,0 +1,23 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Trang-1" id="szrFnJdP1RKpI8NB-8K7">
+    <mxGraphModel dx="3591" dy="3773" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="&lt;img src=&quot;https://images.openai.com/static-rsc-4/6M4ZdvYiubXvrvQLNskslvhi5owc7mAcBHyb7C4KvW-bTjZhbJygXlYcimIjRyujK80zetD44XjjTJ5Qq4iJ6_HFPIcbIa2Xh0RPX_mFbbSkZz30ShyRNC8UyWTbcccbW4NBKh_d_fgGYizDjhuXDetQpmoFWKBf-UJx5mLWZ_M7gVGrZPV4fhERw1gCdT4P?purpose=fullsize&quot; alt=&quot;Darwin: The Core of iOS | by Ruslan Dzhafarov | Medium&quot;&gt;" link="&lt;img src=&quot;https://images.openai.com/static-rsc-4/6M4ZdvYiubXvrvQLNskslvhi5owc7mAcBHyb7C4KvW-bTjZhbJygXlYcimIjRyujK80zetD44XjjTJ5Qq4iJ6_HFPIcbIa2Xh0RPX_mFbbSkZz30ShyRNC8UyWTbcccbW4NBKh_d_fgGYizDjhuXDetQpmoFWKBf-UJx5mLWZ_M7gVGrZPV4fhERw1gCdT4P?purpose=fullsize&quot; alt=&quot;Darwin: The Core of iOS | by Ruslan Dzhafarov | Medium&quot;&gt;" id="nCJipHDCUH0_1mUaQ1l2-1">
+          <mxCell parent="1" style="text;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="40" width="1410" x="-110" y="-510" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;img src=&quot;https://images.openai.com/static-rsc-4/3KBkn8LRt8o6DL92yOhbtmfOFUOVt05e5O-oSxI3Rtme5pbRDUSPAaS3xyfzaZrHXVdS2XROq1GPixUnxbwQtXYo9bGjdeR6XgwW0dc5_k6ARMIB4BuPVeaoBD424rgTEDa4m7NMcM_mB_WMKqdJ7zqCkokNWrOLxNGiLmvlbhmnSRDmuycOQGAupMNMFpAu?purpose=fullsize&quot; alt=&quot;Mobile App Architecture: How to Choose Best Architecture in 2026&quot;&gt;" link="&lt;img src=&quot;https://images.openai.com/static-rsc-4/3KBkn8LRt8o6DL92yOhbtmfOFUOVt05e5O-oSxI3Rtme5pbRDUSPAaS3xyfzaZrHXVdS2XROq1GPixUnxbwQtXYo9bGjdeR6XgwW0dc5_k6ARMIB4BuPVeaoBD424rgTEDa4m7NMcM_mB_WMKqdJ7zqCkokNWrOLxNGiLmvlbhmnSRDmuycOQGAupMNMFpAu?purpose=fullsize&quot; alt=&quot;Mobile App Architecture: How to Choose Best Architecture in 2026&quot;&gt;" id="nCJipHDCUH0_1mUaQ1l2-4">
+          <mxCell parent="1" style="text;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="40" width="30" x="-120" y="400" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nCJipHDCUH0_1mUaQ1l2-5" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 30px;&quot;&gt;Chú thích&lt;br&gt;&lt;/font&gt;&lt;/h1&gt;&lt;div&gt;&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 30px;&quot;&gt;+ Cocoa Touch: Giao diện, tương tác người dùng, vòng&amp;nbsp; đời ứng dụng&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 30px;&quot;&gt;+ Media: Âm thanh, Video, đồ họa, hình ảnh&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 30px;&quot;&gt;+ Core Services: Dịch vụ hệ thống, dữ liệu, mạng và các framework nền tảng&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 30px;&quot;&gt;+ Core OS: Kernel, bảo mật, hệ thống file, drive và các chức năng cấp thấp.&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="1310" width="1050" x="1960" y="430" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

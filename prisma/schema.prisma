@@ -1,0 +1,85 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String?
+  role         Role          @default(STUDENT)
+  examSessions ExamSession[]
+  createdAt    DateTime      @default(now())
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+model Question {
+  id            String       @id @default(uuid())
+  chapterId     Int          // Chapters 1 to 14
+  topic         TopicTag
+  questionEn    String
+  questionVn    String
+  options       Option[]
+  correctIds    String[]     // Array of correct Option IDs
+  isMultiple    Boolean      @default(false)
+  explanationVn String
+  explanationEn String
+  userAnswers   UserAnswer[]
+}
+
+enum TopicTag {
+  APNS_ARCHITECTURE
+  SUPERVISION_ADE
+  CONFIGURATION_PROFILES
+  JAMF_POLICIES
+  DECLARATIVE_MANAGEMENT_DDM
+  PLATFORM_SSO
+  VOLUME_PURCHASING_VPP
+  CONTENT_CACHING
+  FILEVAULT_SECURITY
+  FIRMWARE_DFU_RECOVERY
+}
+
+model Option {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  label      String   // A, B, C, D
+  textEn     String
+  textVn     String
+}
+
+model ExamSession {
+  id        String       @id @default(uuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id])
+  mode      ExamMode     // TIMED or PRACTICE
+  score     Float?
+  isPassed  Boolean?
+  startedAt DateTime     @default(now())
+  endedAt   DateTime?
+  answers   UserAnswer[]
+}
+
+enum ExamMode {
+  TIMED
+  PRACTICE
+}
+
+model UserAnswer {
+  id          String      @id @default(uuid())
+  sessionId   String
+  session     ExamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId  String
+  question    Question    @relation(fields: [questionId], references: [id])
+  selectedIds String[]
+  isCorrect   Boolean
+}

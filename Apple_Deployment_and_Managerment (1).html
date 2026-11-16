@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="artifact-type" content="tool">
+<meta name="design-style" content="showroom">
+<title>DEP110 Learning Hub &amp; Exam Simulator — Apple Certified IT Professional</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --background: #fbfbfd;
+  --surface-container-low: #f5f5f7;
+  --surface-container: #e8e8ed;
+  --surface-container-high: #dcdce1;
+  --on-surface: #1d1d1f;
+  --on-surface-variant: #6e6e73;
+  --outline: #d2d2d7;
+  --outline-variant: #e5e5ea;
+  --primary: #006bd6;
+  --on-primary: #ffffff;
+  --primary-container: #e8f1fd;
+  --on-primary-container: #0058b0;
+  --secondary: #bf4800;
+  --tertiary: #1d1d1f;
+  --error: #d70015;
+  --error-container: #fdebec;
+  --on-error: #ffffff;
+  --positive: #1f7a34;
+  --positive-container: #e8f6ec;
+  --warning: #a85500;
+  --warning-container: #fef3e6;
+  --focus: #006bd6;
+  --data-1: #006bd6;
+  --data-2: #bf4800;
+  --data-3: #248a3d;
+  --data-4: #8944ab;
+  --data-context: #aeaeb2;
+  --font-headline: 'Inter Tight', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --rounded: 9999px;
+  --rounded-md: 0.75rem;
+  --rounded-lg: 1.25rem;
+  --rounded-full: 9999px;
+  --headline-tracking: -0.025em;
+  --figure-tracking: -0.03em;
+  --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.08);
+  --display-size: clamp(1.625rem, 1.3rem + 1vw, 2.125rem);
+  --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+  --label-size: 0.75rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+header { position: static !important; }
+button, input, select, textarea { font-family: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  min-height: 100vh;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+.app-shell * { min-width: 0; }
+
+/* Sidebar */
+.sidebar {
+  background: var(--surface-container-low);
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  border-right: 1px solid var(--outline-variant);
+}
+.brand-block {
+  padding: var(--space-xs) var(--space-sm);
+}
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 var(--space-xs);
+}
+.brand-title {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: var(--headline-tracking);
+  line-height: 1.15;
+  margin: 0;
+}
+.brand-sub {
+  font-size: 0.8125rem;
+  color: var(--on-surface-variant);
+  margin: var(--space-xs) 0 0;
+}
+.progress-summary {
+  background: var(--background);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.8125rem;
+  color: var(--on-surface-variant);
+}
+.progress-row strong {
+  color: var(--on-surface);
+  font-variant-numeric: tabular-nums;
+}
+.progress-track {
+  height: 6px;
+  background: var(--surface-container);
+  border-radius: var(--rounded);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--rounded);
+  transition: width var(--dur-short) var(--ease-out);
+  width: 0%;
+}
+
+.nav-group-title {
+  font-size: var(--label-size);
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  padding: 0 var(--space-sm);
+  margin: 0 0 var(--space-xs);
+}
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-sm);
+  border: 0;
+  border-radius: var(--rounded-md);
+  background: transparent;
+  color: var(--on-surface);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.nav-btn:hover { background: var(--surface-container); }
+.nav-btn.is-active {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-weight: 600;
+}
+.nav-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--rounded);
+  background: var(--background);
+  color: var(--on-surface-variant);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.nav-btn.is-active .nav-num {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.nav-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-check {
+  color: var(--positive);
+  font-size: 0.875rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Mobile Header */
+.mobile-bar {
+  display: none;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface-container-low);
+  border-bottom: 1px solid var(--outline-variant);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+/* Main Content */
+.main-area {
+  padding: var(--space-xl) var(--space-xl) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.top-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--outline-variant);
+}
+.top-header h1 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: var(--display-size);
+  letter-spacing: var(--headline-tracking);
+  line-height: 1.08;
+  margin: 0;
+}
+.top-header .lede {
+  color: var(--on-surface-variant);
+  margin: var(--space-xs) 0 0;
+  max-width: 62ch;
+}
+
+/* Segmented Tabs */
+.tabs-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  background: var(--surface-container);
+  padding: 4px;
+  border-radius: var(--rounded);
+  gap: 4px;
+  align-self: flex-start;
+}
+.tab-btn {
+  min-height: 44px;
+  padding: 0 var(--space-lg);
+  border: 0;
+  border-radius: var(--rounded);
+  background: transparent;
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.tab-btn:hover { color: var(--on-surface); }
+.tab-btn.is-active {
+  background: var(--background);
+  color: var(--on-surface);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.08);
+}
+
+/* Tiles & Cards */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: var(--space-md);
+}
+.tile {
+  background: var(--surface-container-low);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.tile.wide { grid-column: 1 / -1; }
+.tile h2, .tile h3 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.2;
+}
+.tile h2 { font-size: var(--headline-size); }
+.tile h3 { font-size: var(--subhead-size); }
+.tile p { margin: 0; color: var(--on-surface); max-width: 68ch; }
+.muted { color: var(--on-surface-variant); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--rounded);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-size: 0.75rem;
+  font-weight: 600;
+  width: fit-content;
+}
+.chip.orange { background: var(--warning-container); color: var(--warning); }
+.chip.green { background: var(--positive-container); color: var(--positive); }
+.chip.red { background: var(--error-container); color: var(--error); }
+
+.bullet-list {
+  margin: var(--space-xs) 0 0;
+  padding-left: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.bullet-list li { color: var(--on-surface); }
+
+/* Comparison Table */
+.comp-table-wrap { overflow-x: auto; }
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.comp-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--outline);
+}
+.comp-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--outline-variant);
+  vertical-align: top;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--background);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* Interactive Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+.btn-primary {
+  min-height: 44px;
+  padding: 0 var(--space-lg);
+  border: 0;
+  border-radius: var(--rounded);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--dur-micro) var(--ease-out);
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-secondary {
+  min-height: 44px;
+  padding: 0 var(--space-lg);
+  border: 0;
+  border-radius: var(--rounded);
+  background: var(--surface-container);
+  color: var(--on-surface);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--surface-container-high); }
+.btn-secondary.is-flagged {
+  background: var(--warning-container);
+  color: var(--warning);
+}
+
+/* Quiz & Exam Cards */
+.quiz-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 820px;
+}
+.question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.question-prompt {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin: 0;
+}
+.options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--space-md);
+  border: 0;
+  border-radius: var(--rounded-lg);
+  background: var(--background);
+  color: var(--on-surface);
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+  transition: box-shadow var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+}
+.option-card:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 1.5px var(--primary);
+  background: var(--primary-container);
+}
+.option-card.is-selected {
+  box-shadow: inset 0 0 0 2px var(--primary);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-weight: 500;
+}
+.option-card.is-correct {
+  box-shadow: inset 0 0 0 2px var(--positive);
+  background: var(--positive-container);
+  color: var(--on-surface);
+}
+.option-card.is-wrong {
+  box-shadow: inset 0 0 0 2px var(--error);
+  background: var(--error-container);
+  color: var(--on-surface);
+}
+.opt-letter {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--rounded);
+  background: var(--surface-container-low);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.feedback-box {
+  background: var(--background);
+  border-radius: var(--rounded-md);
+  padding: var(--space-md);
+  border-left: 4px solid var(--primary);
+}
+.feedback-box.ok { border-left-color: var(--positive); }
+.feedback-box.bad { border-left-color: var(--error); }
+
+/* Pearson VUE Exam Engine */
+.exam-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: var(--space-lg);
+  align-items: start;
+}
+.exam-topbar {
+  background: var(--surface-container-low);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+.timer-pill {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 14px;
+  border-radius: var(--rounded);
+  background: var(--background);
+  color: var(--on-surface);
+}
+.timer-pill.urgent { background: var(--error-container); color: var(--error); }
+
+.q-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+.q-node {
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+}
+.q-node.is-answered { background: var(--primary-container); color: var(--on-primary-container); }
+.q-node.is-current { box-shadow: inset 0 0 0 2px var(--primary); }
+.q-node.is-flagged::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--rounded);
+  background: var(--secondary);
+}
+.q-node.is-right { background: var(--positive-container); color: var(--positive); }
+.q-node.is-wrong { background: var(--error-container); color: var(--error); }
+
+/* Terminal Lab */
+.terminal-box {
+  background: var(--tertiary);
+  color: var(--background);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: var(--space-md);
+  border-radius: var(--rounded-md);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.lab-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: flex-end;
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 220px;
+}
+.field-group label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+}
+.field-input {
+  height: 44px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--outline);
+  border-radius: var(--rounded);
+  background: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* Score Hero */
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: var(--space-md);
+}
+.figure-tile {
+  background: var(--background);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-lg);
+  text-align: center;
+}
+.figure-val {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 2.25rem;
+  letter-spacing: var(--figure-tracking);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.figure-cap {
+  font-size: 0.8125rem;
+  color: var(--on-surface-variant);
+  margin-top: var(--space-xs);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+
+@media (max-width: 960px) {
+  .exam-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .mobile-bar { display: flex; }
+  .sidebar {
+    display: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .sidebar.is-open { display: flex; }
+  .main-area { padding: var(--space-md); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-bar">
+  <strong>DEP110 Learning Hub</strong>
+  <button type="button" class="btn-secondary" id="mobile-menu-btn" onclick="toggleMobileMenu()">Danh mục bài học</button>
+</div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Điều hướng khóa học">
+    <div class="brand-block">
+      <p class="eyebrow">Apple Certified IT Professional</p>
+      <h2 class="brand-title">DEP110 Study Hub</h2>
+      <p class="brand-sub">Apple Platform Deployment &amp; Management (iOS 27 / macOS 27)</p>
+    </div>
+
+    <div class="progress-summary">
+      <div class="progress-row">
+        <span>Tiến độ hoàn thành</span>
+        <strong id="progress-text">0 / 14 chương</strong>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-row">
+        <span>Điểm thi thử cao nhất</span>
+        <strong id="best-exam-text">Chưa thi</strong>
+      </div>
+    </div>
+
+    <div>
+      <p class="nav-group-title">Công cụ thực hành &amp; Thi</p>
+      <div class="nav-list">
+        <button type="button" class="nav-btn" id="nav-labs" onclick="selectMode('labs')">
+          <span class="nav-num">CLI</span>
+          <span class="nav-title">Labs CLI &amp; Chẩn đoán</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-exam" onclick="selectMode('exam')">
+          <span class="nav-num">60Q</span>
+          <span class="nav-title">Thi thử DEP110 (Pearson VUE)</span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <p class="nav-group-title">14 Chương Học DEP110</p>
+      <div class="nav-list" id="chapter-nav-list"></div>
+    </div>
+  </aside>
+
+  <main class="main-area" id="main-area">
+    <header class="top-header">
+      <div>
+        <p class="eyebrow" id="header-eyebrow">Chương 1 / 14</p>
+        <h1 id="header-title">Đang tải...</h1>
+        <p class="lede" id="header-lede"></p>
+      </div>
+      <div class="tabs-bar" role="tablist" aria-label="Chế độ xem nội dung">
+        <button type="button" role="tab" class="tab-btn is-active" id="tab-theory" onclick="selectTab('theory')">Lý thuyết</button>
+        <button type="button" role="tab" class="tab-btn" id="tab-quiz" onclick="selectTab('quiz')">Trắc nghiệm theo bài</button>
+        <button type="button" role="tab" class="tab-btn" id="tab-exam" onclick="selectTab('exam')">Thi thử DEP110</button>
+      </div>
+    </header>
+
+    <section id="content-root" aria-live="polite"></section>
+
+    <footer class="muted" style="font-size: 0.8125rem; border-top: 1px solid var(--outline-variant); padding-top: var(--space-md);">
+      Nguồn tham chiếu: Apple Platform Deployment Guide, Apple Business User Guide, Apple Professional Training (Deployment &amp; Management Course), Microsoft Learn Platform SSO for macOS, AppConfig Community.
+    </footer>
+  </main>
+</div>
+
+<api-shim></api-shim>
+<script>
+const CHAPTERS = [
+  {
+    id: 1,
+    code: `DEP010–030`,
+    title: `Khởi động & Chuẩn bị Chứng chỉ`,
+    lede: `Tổng quan lộ trình Apple Deployment and Management Exam (iOS 27, iPadOS 27, macOS 27) và quy trình thi trên Pearson VUE.`,
+    keyTerms: [`ACRS`, `Pearson OnVUE`, `75% Passing Score`, `120 phút / ~80 câu`],
+    cards: [
+      {
+        badge: `Cấu trúc kỳ thi`,
+        heading: `Apple Certified IT Professional Badge`,
+        body: `Kỳ thi xác thực năng lực triển khai và quản trị thiết bị Apple ở quy mô doanh nghiệp dựa trên iOS 27, iPadOS 27 và macOS 27.`,
+        bullets: [
+          `Điểm đạt tối thiểu: 75% (không làm tròn điểm).`,
+          `Dạng câu hỏi: Single-select và Multiple-select (nhiều đáp án đúng).`,
+          `Quản lý hồ sơ chứng chỉ tại ACRS (Apple Certification Records System) và thi trực tuyến qua Pearson OnVUE.`,
+          `Nếu chưa đạt Practice Exam, có thể thi lại sau 7 ngày.`
+        ]
+      },
+      {
+        badge: `Chiến lược ôn tập`,
+        heading: `Kết hợp lý thuyết nền tảng và thực hành`,
+        body: `Không chỉ ghi nhớ khái niệm, kỹ sư IT cần phân biệt rạch ròi ranh giới giữa MDM Profile, Declarative Device Management (DDM) và chính sách riêng của từng MDM vendor.`,
+        bullets: [
+          `Nắm vững vòng đời thiết bị: Mua hàng → ADE → Supervision → Configuration → Security → Return to Service.`,
+          `Hiểu rõ điều kiện tiên quyết của từng tính năng theo phiên bản OS (macOS 14/15/26/27).`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Mức điểm tối thiểu (không làm tròn) để vượt qua kỳ thi Apple Deployment and Management Practice Exam là bao nhiêu?`,
+        opts: [`65%`, `70%`, `75%`, `80%`],
+        ans: 2,
+        exp: `Theo tài liệu Apple Professional Training (Preparing for the Exam), điểm đạt tối thiểu là 75% và điểm số không được làm tròn.`
+      },
+      {
+        q: `Nếu chưa vượt qua Apple Deployment and Management Practice Exam ở lần đầu, thí sinh cần chờ bao lâu trước khi thi lại?`,
+        opts: [`24 giờ`, `7 ngày`, `14 ngày`, `30 ngày`],
+        ans: 1,
+        exp: `Thí sinh có thể mua lượt thi thử mới và thi lại sau 7 ngày, không giới hạn số lần thi thử.`
+      }
+    ]
+  },
+  {
+    id: 2,
+    code: `DEP110–120`,
+    title: `Device Management, APNs & Profile vs Policy`,
+    lede: `Kiến trúc MDM truyền thống, Declarative Device Management (DDM), kết nối APNs và sự khác biệt cốt lõi giữa Configuration Profile và Jamf Policy.`,
+    keyTerms: [`MDM`, `DDM`, `APNs TCP 5223`, `.mobileconfig`, `Jamf Policy`],
+    comparisonTable: {
+      title: `So sánh: Configuration Profile (.mobileconfig) vs Jamf Policy`,
+      headers: [`Tiêu chí`, `Configuration Profile (.mobileconfig)`, `Jamf Policy (MDM Agent / Jamf Binary)`],
+      rows: [
+        [`Cơ chế phân phối`, `Chuẩn Apple MDM qua APNs (đẩy xuống OS).`, `Jamf binary trên macOS check-in định kỳ (hoặc Self Service).`],
+        [`Phạm vi hệ điều hành`, `macOS, iOS, iPadOS, tvOS, visionOS, watchOS.`, `Chỉ áp dụng trên macOS (không chạy trên iOS/iPadOS).`],
+        [`Tác vụ điển hình`, `Wi-Fi, Passcode, VPN, Restrictions, Certificates, FileVault, Extensible SSO.`, `Chạy script Bash/Zsh tùy chỉnh, cài đặt .pkg/.dmg nội bộ, cập nhật inventory (recon).`],
+        [`Tính cưỡng chế`, `Bị khóa (locked) bởi OS; người dùng không thể sửa đổi nếu Supervised.`, `Thực thi theo Trigger (Login, Enrollment Complete, Recurring Check-in) & Frequency.`]
+      ]
+    },
+    cards: [
+      {
+        badge: `Kiến trúc APNs`,
+        heading: `Apple Push Notification service (APNs)`,
+        body: `APNs là cầu nối đánh thức thiết bị liên lạc với máy chủ MDM. MDM server không tự đẩy trực tiếp payload tới thiết bị mà gửi thông báo đánh thức qua APNs.`,
+        bullets: [
+          `Cổng mạng bắt buộc: Outbound TCP Port 5223 tới dải IP 17.0.0.0/8 (fallback TCP 443 khi bị proxy chặn).`,
+          `Chứng chỉ APNs Push Certificate có thời hạn 1 năm và phải gia hạn bằng chính Apple Account đã tạo ban đầu.`,
+          `Hậu quả nếu chứng chỉ APNs hết hạn: Mất hoàn toàn khả năng gửi lệnh MDM/cập nhật profile; thiết bị có thể phải re-enroll nếu tạo mới bằng Apple Account khác.`
+        ]
+      },
+      {
+        badge: `Tự chủ phía Client`,
+        heading: `Declarative Device Management (DDM)`,
+        body: `DDM là chuẩn quản lý thiết bị mới của Apple giúp thiết bị tự chủ đánh giá trạng thái và áp dụng cấu hình bất đồng bộ mà không cần server liên tục poll.`,
+        bullets: [
+          `4 loại Declarations: Configurations, Assets, Activations, và Management.`,
+          `Proactive Status Reports: Thiết bị chủ động gửi báo cáo khi trạng thái thay đổi (OS version, passcode compliance).`,
+          `Hoạt động ổn định ngay cả khi mất kết nối mạng tạm thời (nhờ logic predicate đánh giá cục bộ).`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Trong kiến trúc quản trị macOS với Jamf Pro, tác vụ nào bắt buộc phải thực hiện bằng Configuration Profile (.mobileconfig) thay vì Jamf Policy?`,
+        opts: [
+          `Chạy kịch bản Bash để xóa file tạm`,
+          `Cấu hình Wi-Fi 802.1X, Passcode và Restrictions hệ thống`,
+          `Cài đặt gói phần mềm nội bộ dạng .dmg`,
+          `Kích hoạt lệnh cập nhật inventory (jamf recon)`
+        ],
+        ans: 1,
+        exp: `Configuration Profile (.mobileconfig) quản lý các thiết lập cấp hệ điều hành do Apple quy định như Wi-Fi, Passcode, Restrictions và FileVault. Jamf Policy dùng để chạy script Bash/Zsh, cài .pkg/.dmg hoặc cập nhật inventory.`
+      },
+      {
+        q: `Cổng mạng outbound mặc định mà thiết bị Apple cần mở tới dải IP 17.0.0.0/8 để nhận thông báo đánh thức từ APNs là gì?`,
+        opts: [`TCP 5223`, `UDP 500`, `TCP 8443`, `TCP 2197`],
+        ans: 0,
+        exp: `Thiết bị Apple kết nối outbound qua TCP port 5223 tới dải 17.0.0.0/8 (có thể fallback sang TCP 443 nếu mạng doanh nghiệp chỉ mở HTTPS).`
+      },
+      {
+        q: `Ưu điểm cốt lõi của Declarative Device Management (DDM) so với MDM truyền thống là gì?`,
+        opts: [
+          `Thiết bị chủ động áp dụng cấu hình bất đồng bộ và gửi Status Reports khi trạng thái thay đổi`,
+          `Thay thế hoàn toàn nhu cầu sử dụng chứng chỉ APNs`,
+          `Cho phép chạy script Zsh trên iPhone không cần supervision`,
+          `Loại bỏ hoàn toàn bước đăng ký vào Apple Business`
+        ],
+        ans: 0,
+        exp: `Với DDM, thiết bị tự áp dụng settings và gửi Status Reports chủ động về server mà không cần server liên tục cue hoặc poll thiết bị.`
+      }
+    ]
+  },
+  {
+    id: 3,
+    code: `DEP130–140`,
+    title: `Phương thức Đăng ký & Supervision`,
+    lede: `So sánh Automated Device Enrollment (ADE), Device Enrollment, User Enrollment (BYOD) và vai trò của Device Supervision.`,
+    keyTerms: [`ADE`, `Zero-Touch`, `Supervision`, `Account-Driven Enrollment`, `Return to Service`],
+    cards: [
+      {
+        badge: `Sở hữu doanh nghiệp`,
+        heading: `Automated Device Enrollment (ADE) & Supervision`,
+        body: `ADE là phương thức chuẩn mực cho thiết bị thuộc sở hữu tổ chức (mua từ Apple hoặc đại lý ủy quyền), cho phép triển khai Zero-touch ngay khi mở hộp.`,
+        bullets: [
+          `Tự động bật chế độ Supervision (giám sát) — mở khóa các hạn chế nâng cao, Activation Lock bypass và cấu hình không thể gỡ bỏ.`,
+          `Có thể tùy biến Setup Assistant để bỏ qua các bước như Apple Account, Siri, Analytics.`,
+          `Hỗ trợ Return to Service để xóa sạch và tái đăng ký nhanh thiết bị dùng chung (Shared iPad / iPhone).`
+        ]
+      },
+      {
+        badge: `BYOD & Quyền riêng tư`,
+        heading: `User Enrollment & Account-Driven Enrollment`,
+        body: `Thiết kế riêng cho thiết bị cá nhân (BYOD), tách biệt rạch ròi dữ liệu công việc và dữ liệu cá nhân thông qua Managed Apple Account.`,
+        bullets: [
+          `Tạo phân vùng APFS mã hóa riêng cho dữ liệu doanh nghiệp (Managed Volume).`,
+          `MDM không thể xóa toàn bộ máy (Erase Device), không đọc được ảnh/tin nhắn cá nhân.`,
+          `Account-Driven Enrollment thực hiện ngay trong Settings → General → VPN & Device Management.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Phương thức đăng ký nào cho phép triển khai Zero-touch, tự động bật Device Supervision và ngăn người dùng gỡ bỏ MDM Profile trên thiết bị công ty?`,
+        opts: [
+          `Account-Driven User Enrollment`,
+          `Automated Device Enrollment (ADE)`,
+          `Manual Profile Installation qua Safari`,
+          `Apple Configurator Guest Mode`
+        ],
+        ans: 1,
+        exp: `Automated Device Enrollment (ADE) liên kết số serial thiết bị trong Apple Business với MDM server, tự động kích hoạt Supervision và chính sách bắt buộc (mandatory MDM).`
+      },
+      {
+        q: `Trên thiết bị BYOD sử dụng User Enrollment, quản trị viên MDM có quyền thực hiện hành động nào sau đây?`,
+        opts: [
+          `Xóa toàn bộ thiết bị về cài đặt gốc (Full Erase)`,
+          `Gỡ bỏ dữ liệu và ứng dụng được quản lý thuộc Managed Apple Account`,
+          `Theo dõi vị trí GPS liên tục của người dùng cá nhân`,
+          `Ép buộc kích hoạt Activation Lock bằng tài khoản công ty`
+        ],
+        ans: 1,
+        exp: `User Enrollment bảo vệ quyền riêng tư cá nhân: IT chỉ có thể xóa phần dữ liệu công việc (managed apps/accounts) trên phân vùng tách biệt, không thể wipe toàn bộ thiết bị cá nhân.`
+      }
+    ]
+  },
+  {
+    id: 4,
+    code: `DEP150–170`,
+    title: `Apple Business (ABM) & Quản lý Thiết bị`,
+    lede: `Hợp nhất Apple Business Manager, Apple Business Essentials và Apple Business Connect thành nền tảng Apple Business thống nhất.`,
+    keyTerms: [`Apple Business`, `Roles`, `Organizational Units`, `Device Assignment`, `VPP Token`],
+    cards: [
+      {
+        badge: `Cập nhật 2026`,
+        heading: `Apple Business Manager nay là Apple Business`,
+        body: `Apple Business hợp nhất Apple Business Manager, Apple Business Essentials và Apple Business Connect thành một cổng quản trị duy nhất cho cả vận hành nội bộ và khách hàng.`,
+        bullets: [
+          `Phân quyền vai trò rõ ràng: Administrator, People Manager, Device Enrollment Manager, Content Manager, Staff.`,
+          `Liên kết nhiều MDM Server (ví dụ Jamf Pro cho Mac, Intune cho iOS) và gán mặc định theo loại thiết bị.`,
+          `Cung cấp Server Token (.p7m) để đồng bộ danh sách thiết bị ADE và Content Token (.vpptoken) để phân phối ứng dụng.`
+        ]
+      },
+      {
+        badge: `Điều chuyển thiết bị`,
+        heading: `Quản lý Device Assignment`,
+        body: `Thiết bị mua qua kênh ủy quyền tự động xuất hiện trong Apple Business dựa trên Organization ID và Reseller ID.`,
+        bullets: [
+          `Release Device: Chỉ thực hiện khi bán/thanh lý thiết bị vĩnh viễn (không thể tự thêm lại trừ khi dùng Apple Configurator).`,
+          `Reassign: Chuyển thiết bị từ MDM server cũ sang MDM server mới khi migrate hệ thống.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Theo tài liệu Apple Business User Guide mới nhất, Apple Business là sự hợp nhất của những dịch vụ nào?`,
+        opts: [
+          `Apple Business Manager, Apple Business Essentials và Apple Business Connect`,
+          `Apple School Manager, AppConfig và Jamf Pro`,
+          `Apple Configurator, FileVault và APNs`,
+          `iCloud+, AppleCare và AppleSeed for IT`
+        ],
+        ans: 0,
+        exp: `Apple Business kết hợp Apple Business Manager, Apple Business Essentials và Apple Business Connect vào một nền tảng toàn diện duy nhất.`
+      },
+      {
+        q: `Khi muốn chuyển toàn bộ máy Mac đang quản lý từ MDM A sang MDM B bằng ADE, quản trị viên cần làm gì trong Apple Business trước khi re-enroll?`,
+        opts: [
+          `Chọn Release Device để xóa hẳn khỏi tổ chức`,
+          `Reassign thiết bị sang bản ghi MDM Server B trong Apple Business`,
+          `Xóa Apple Account của tất cả nhân viên`,
+          `Tắt FileVault trên từng máy`
+        ],
+        ans: 1,
+        exp: `Quản trị viên chỉ cần Reassign thiết bị sang MDM Server đích. Tuyệt đối không chọn Release trừ khi thanh lý thiết bị.`
+      }
+    ]
+  },
+  {
+    id: 5,
+    code: `DEP180`,
+    title: `Apple Configurator & Thêm Thiết bị Thủ công`,
+    lede: `Chuẩn bị thiết bị qua USB/Wi-Fi, cài đặt ứng dụng cục bộ và thêm thiết bị mua ngoài kênh ủy quyền vào Apple Business.`,
+    keyTerms: [`Apple Configurator`, `30-Day Provisional`, `USB-C`, `Blueprint`],
+    cards: [
+      {
+        badge: `Bổ sung ADE`,
+        heading: `Thêm thiết bị ngoài luồng vào Apple Business`,
+        body: `Các máy iPhone, iPad, Mac (Apple Silicon/T2) mua từ cửa hàng bán lẻ có thể được thêm thủ công vào Apple Business thông qua Apple Configurator trên iPhone hoặc Mac.`,
+        bullets: [
+          `Thiết bị sẽ bước vào giai đoạn Provisional Enrollment 30 ngày: người dùng có thể chọn "Leave Remote Management" trong 30 ngày đầu.`,
+          `Sau 30 ngày, thiết bị được khóa vĩnh viễn vào tổ chức như hàng mua trực tiếp từ Apple.`,
+          `Yêu cầu xóa trắng thiết bị (Erase) để áp dụng luồng ADE ngay sau khi gán MDM.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Khi một thiết bị được thêm vào Apple Business thủ công bằng Apple Configurator, khoảng thời gian tạm thời (provisional period) cho phép người dùng tự gỡ bỏ quản lý từ xa là bao lâu?`,
+        opts: [`7 ngày`, `14 ngày`, `30 ngày`, `90 ngày`],
+        ans: 2,
+        exp: `Thiết bị thêm qua Apple Configurator có thời gian tạm thời 30 ngày để người dùng có thể rời khỏi MDM nếu cần; sau 30 ngày sẽ bị khóa cố định vào tổ chức.`
+      }
+    ]
+  },
+  {
+    id: 6,
+    code: `DEP190–200`,
+    title: `Chuẩn bị Mạng & Content Caching`,
+    lede: `Tối ưu băng thông doanh nghiệp với dịch vụ Content Caching trên macOS và cấu hình tường lửa mạng cho dịch vụ Apple.`,
+    keyTerms: [`Content Caching`, `AssetCacheManagerUtil`, `Ethernet`, `Peer Caches`, `DNS TXT`],
+    cards: [
+      {
+        badge: `Tối ưu băng thông`,
+        heading: `Kiến trúc Content Caching trên macOS`,
+        body: `Content Caching lưu trữ cục bộ các bản cập nhật macOS/iOS, ứng dụng App Store và dữ liệu iCloud đã tải xuống để các máy client khác trên mạng nội bộ lấy lại với tốc độ LAN.`,
+        bullets: [
+          `Khuyến nghị quan trọng từ Apple: Triển khai trên máy Mac kết nối dây Ethernet đơn lẻ (không dùng Wi-Fi để đạt hiệu năng tối ưu).`,
+          `Cơ chế tự động: Client tự tìm cache gần nhất qua dịch vụ tra cứu IP public/private của Apple mà không cần cấu hình thủ công trên từng máy.`,
+          `Nhiều Content Cache trong cùng mạng tự động trở thành Peer để chia sẻ gói tin cho nhau, hoặc cấu hình Parent-Child giữa các chi nhánh.`
+        ]
+      },
+      {
+        badge: `Quyền riêng tư & Hạn chế`,
+        heading: `Kiểm soát và Giám sát Caching`,
+        body: `Vì lý do bảo mật, Apple không ghi log chi tiết từng client đã tải file nào, nhưng quản trị viên có thể xem thống kê tổng hợp (aggregate metrics).`,
+        bullets: [
+          `Có thể giới hạn dải IP tùy chỉnh ("Devices using custom local networks") hoặc dùng DNS TXT record khi quản lý nhiều IP public.`,
+          `Dùng Restriction payload trên MDM để ngăn người dùng tự ý bật Content Caching trên máy trạm cá nhân.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Theo khuyến nghị của Apple Platform Deployment, cấu hình mạng tối ưu nhất cho một máy Mac đóng vai trò Content Caching server là gì?`,
+        opts: [
+          `Kết nối đồng thời cả Wi-Fi và Ethernet để tăng băng thông`,
+          `Một kết nối Ethernet có dây duy nhất tới mạng`,
+          `Kết nối qua điểm phát sóng cá nhân (Personal Hotspot)`,
+          `Sử dụng USB-C hub chia sẻ Wi-Fi`
+        ],
+        ans: 1,
+        exp: `Apple nhấn mạnh: để đạt hiệu quả tốt nhất, hãy triển khai Content Caching trên máy Mac chỉ có một kết nối Ethernet có dây duy nhất.`
+      },
+      {
+        q: `Khi một mạng doanh nghiệp có nhiều máy chủ Content Caching hoạt động, chúng tương tác với nhau như thế nào khi một cache không có file được yêu cầu?`,
+        opts: [
+          `Tự động tải ngay từ Apple Internet mà không hỏi các máy khác`,
+          `Tự động trở thành Peer và hỏi các Content Cache ngang hàng trước, sau đó mới lên Parent hoặc Internet`,
+          `Báo lỗi timeout cho máy client`,
+          `Yêu cầu người dùng chọn thủ công tên máy chủ cache`
+        ],
+        ans: 1,
+        exp: `Các Content Cache tự động kết nối thành Peer để chia sẻ phần mềm đã cache; nếu không có trên peer mới kiểm tra Parent cache hoặc tải từ Apple.`
+      }
+    ]
+  },
+  {
+    id: 7,
+    code: `DEP210`,
+    title: `Dịch vụ Định danh & Platform SSO`,
+    lede: `Tích hợp Extensible Single Sign-On, Kerberos SSO và Platform SSO với Shared Device Keys trên macOS.`,
+    keyTerms: [`Platform SSO`, `Shared Device Keys`, `Secure Enclave`, `Token To User Mapping`, `UPN`],
+    cards: [
+      {
+        badge: `Xác thực cấp thiết bị`,
+        heading: `Platform SSO & Shared Device Keys`,
+        body: `Platform SSO (macOS 13+) cho phép người dùng đăng nhập máy Mac bằng danh tính IdP (như Microsoft Entra ID) ngay từ màn hình FileVault/Login Window và đồng bộ mật khẩu hoặc dùng khóa phần cứng Secure Enclave.`,
+        bullets: [
+          `3 phương thức xác thực (macOS 14+): Password, UserSecureEnclaveKey (passwordless với Touch ID), và SmartCard.`,
+          `Use Shared Device Keys (Enabled): Cho phép mọi người dùng trên cùng máy Mac dùng chung cặp khóa ký/mã hóa cấp thiết bị, hỗ trợ tạo tài khoản cục bộ theo yêu cầu (On-demand account creation) và Network Authorization.`,
+          `macOS 26+: Hỗ trợ kích hoạt Platform SSO ngay trong Automated Device Enrollment (ADE), Tap to Login và Authenticated Guest Mode.`
+        ]
+      },
+      {
+        badge: `Cấu hình Microsoft Intune`,
+        heading: `Thông số bắt buộc cho Entra ID Platform SSO`,
+        body: `Triển khai qua Settings Catalog cùng ứng dụng Company Portal phiên bản 5.2404.0 trở lên.`,
+        bullets: [
+          `Extension Identifier: com.microsoft.CompanyPortalMac.ssoextension | Team Identifier: UBF8T346G9.`,
+          `Registration token: {{DEVICEREGISTRATION}} (bắt buộc giữ nguyên cặp dấu ngoặc nhọn).`,
+          `Token To User Mapping: Account Name = com.apple.PlatformSSO.AccountShortName (hoặc preferred_username), Full Name = name.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Trong cấu hình Platform SSO (macOS 14+), thiết lập "Use Shared Device Keys = Enabled" mang lại khả năng nào cho máy Mac dùng chung hoặc đăng ký lúc mở hộp?`,
+        opts: [
+          `Cho phép mọi người dùng đăng nhập vào cùng máy Mac dùng chung khóa định danh thiết bị và hỗ trợ Network Authorization`,
+          `Cho phép tắt hoàn toàn FileVault mà không cần mã hóa ổ đĩa`,
+          `Tự động chia sẻ mật khẩu Apple Account cá nhân giữa các nhân viên`,
+          `Vô hiệu hóa yêu cầu cài đặt ứng dụng SSO Extension`
+        ],
+        ans: 0,
+        exp: `Use Shared Device Keys dùng chung signing/encryption keys cấp thiết bị cho mọi user trên máy Mac, là điều kiện cần cho Network Authorization và quản lý quyền theo nhóm IdP trên máy dùng chung.`
+      },
+      {
+        q: `Khi kết hợp Platform SSO với Kerberos SSO Extension trên macOS, Apple khuyến nghị thiết lập tham số syncLocalPassword trong cấu hình Kerberos SSO là gì?`,
+        opts: [`TRUE`, `FALSE`, `AUTO`, `REQUIRED`],
+        ans: 1,
+        exp: `Theo Apple Platform Deployment Guide, khi kết hợp Platform SSO với Kerberos SSO Extension, phải đặt syncLocalPassword = FALSE trong cấu hình Kerberos SSO để tránh xung đột đồng bộ mật khẩu.`
+      }
+    ]
+  },
+  {
+    id: 8,
+    code: `DEP220–240`,
+    title: `Liên kết Tên miền & Managed Apple Accounts`,
+    lede: `Xác minh tên miền (Domain Verification), Federated Authentication với Entra ID / Google Workspace và vòng đời Managed Apple Account.`,
+    keyTerms: [`Federated Auth`, `Managed Apple Account`, `Domain Capture`, `iCloud Drive`],
+    cards: [
+      {
+        badge: `Quản trị danh tính`,
+        heading: `Federated Authentication & Managed Apple Accounts`,
+        body: `Liên kết tên miền công ty trong Apple Business giúp nhân viên dùng chính email/mật khẩu IdP doanh nghiệp để đăng nhập như một Managed Apple Account.`,
+        bullets: [
+          `Tách biệt hoàn toàn dữ liệu cá nhân: Tổ chức sở hữu tài khoản, có thể đặt lại mật khẩu, khóa hoặc thu hồi quyền truy cập bất kỳ lúc nào.`,
+          `Hỗ trợ dung lượng iCloud doanh nghiệp cho công việc và tính năng Continuity/Keychain được kiểm soát.`,
+          `Domain Capture xử lý các tài khoản cá nhân đang dùng email công ty trước khi bật Federation.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Lợi ích chính của việc bật Federated Authentication giữa Apple Business và Microsoft Entra ID là gì?`,
+        opts: [
+          `Nhân viên đăng nhập bằng tài khoản doanh nghiệp hiện có để tự động tạo Managed Apple Account`,
+          `Biến mọi Apple Account cá nhân thành tài khoản miễn phí dung lượng vô hạn`,
+          `Cho phép nhân viên tự mua ứng dụng trả phí bằng thẻ tín dụng công ty`,
+          `Loại bỏ hoàn toàn nhu cầu sử dụng MDM Server`
+        ],
+        ans: 0,
+        exp: `Federated Authentication đồng bộ danh tính từ IdP (Entra ID / Google Workspace) để người dùng dùng chung mật khẩu công việc cho Managed Apple Account.`
+      }
+    ]
+  },
+  {
+    id: 9,
+    code: `DEP250–270`,
+    title: `Cấu hình Thiết bị, Payloads & DDM`,
+    lede: `Phân tích sâu Setup Assistant, Payloads, Restrictions, Commands/Queries và Declarative Configurations.`,
+    keyTerms: [`Declarations`, `Status Reports`, `Payloads`, `Restrictions`, `Queries`],
+    cards: [
+      {
+        badge: `Kiến trúc DDM`,
+        heading: `Cấu hình Khai báo (Declarative Configurations)`,
+        body: `Apple liên tục mở rộng DDM cho hầu hết tác vụ trọng yếu: Software Update, Passcode, Safari Extensions, Network Relay, Extensible SSO, App Settings và Service Configuration Files.`,
+        bullets: [
+          `MDM Commands: Hành động tức thời (Lock, Wipe, Restart, InstallApplication, EnableRemoteDesktop).`,
+          `MDM Queries: Thu thập thông tin phần cứng, mạng, OS, danh sách app đã cài và trạng thái bảo mật (Security Queries).`,
+          `Supervised-only Restrictions: Những hạn chế cấp sâu (như chặn AirDrop, chặn xóa app, chặn Erase All Content and Settings) chỉ hoạt động khi thiết bị ở trạng thái Supervised.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Trong mô hình Declarative Device Management (DDM), thành phần nào chịu trách nhiệm gửi thông tin thay đổi trạng thái từ thiết bị về máy chủ MDM một cách chủ động?`,
+        opts: [`MDM Polling Requests`, `Declarative Status Reports`, `Setup Assistant Payload`, `APNs Feedback Service`],
+        ans: 1,
+        exp: `Declarative Status Reports cho phép thiết bị chủ động báo cáo ngay khi có thay đổi trạng thái (như phiên bản OS, lỗi cấu hình) về MDM server.`
+      }
+    ]
+  },
+  {
+    id: 10,
+    code: `DEP280–290`,
+    title: `Quản lý Cập nhật Phần mềm (Software Updates)`,
+    lede: `Kiểm soát lịch trình nâng cấp iOS/iPadOS/macOS bằng DDM Software Update, trì hoãn bản vá (Deferrals) và thử nghiệm AppleSeed for IT.`,
+    keyTerms: [`DDM Software Update`, `Rapid Security Response`, `Background Security`, `AppleSeed for IT`],
+    cards: [
+      {
+        badge: `Chuẩn mới`,
+        heading: `Quản lý cập nhật qua Declarative Device Management`,
+        body: `Apple chuyển từ lệnh MDM ScheduleOSUpdate truyền thống sang Declarative Software Update configuration để đảm bảo thiết bị tự tải và ép buộc cài đặt đúng hạn chót (TargetLocalDateTime).`,
+        bullets: [
+          `Cho phép trì hoãn hiển thị bản cập nhật tối đa 90 ngày (Deferral) để bộ phận IT kiểm thử tương thích.`,
+          `Background Security Improvements (trước đây là Rapid Security Responses) tự động vá lỗ hổng bảo mật giữa các bản cập nhật lớn.`,
+          `AppleSeed for IT cung cấp bản beta sớm để kiểm thử ứng dụng nội bộ và chính sách MDM.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Cơ chế nào được Apple khuyến nghị để thực thi cập nhật OS có thời hạn chót (TargetLocalDateTime) đáng tin cậy ngay cả khi thiết bị mất kết nối MDM tạm thời?`,
+        opts: [
+          `Gửi lệnh ScheduleOSUpdate lặp lại mỗi 5 phút`,
+          `Declarative Software Update Configuration (DDM)`,
+          `Yêu cầu người dùng tự kiểm tra Software Update hàng tuần`,
+          `Chạy script Bash qua LaunchDaemon trên iOS`
+        ],
+        ans: 1,
+        exp: `DDM Software Update Configuration lưu chính sách và hạn chót ngay trên thiết bị, giúp máy tự động tải, nhắc nhở và cài đặt đúng thời điểm quy định.`
+      }
+    ]
+  },
+  {
+    id: 11,
+    code: `DEP300–310`,
+    title: `Mua sắm & Phân phối Nội dung (VPP & AppConfig)`,
+    lede: `Phân phối Managed Apps, Custom Apps, Unlisted Apps, gói .pkg macOS và chuẩn cấu hình ứng dụng mở AppConfig.`,
+    keyTerms: [`Managed Apps`, `Custom Apps`, `AppConfig`, `Unlisted Apps`, `.pkg Distribution`],
+    cards: [
+      {
+        badge: `App Store & Nội bộ`,
+        heading: `Phân loại phân phối ứng dụng & AppConfig`,
+        body: `Tổ chức có thể mua giấy phép số lượng lớn (miễn phí hoặc trả phí) trong Apple Business và thu hồi/cấp lại bất cứ lúc nào khi gán theo Device License.`,
+        bullets: [
+          `Managed Apps: App công khai trên App Store, có thể tự động xóa khi gỡ hồ sơ MDM hoặc chặn sao lưu dữ liệu ra ngoài (Manage Organizational Data).`,
+          `Custom Apps & Unlisted Apps: Phân phối app viết riêng cho tổ chức hoặc đối tác thông qua Organization ID mà không hiển thị công khai.`,
+          `AppConfig Community: Chuẩn cấu hình gốc của OS (Managed App Configuration) giúp tự động điền URL server, port, mã nhóm, SSO và App Tunnel cho app di động mà không cần SDK độc quyền hay App Wrapping.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Lợi ích chính của chuẩn AppConfig đối với nhà phát triển và doanh nghiệp khi triển khai ứng dụng di động là gì?`,
+        opts: [
+          `Sử dụng API gốc của hệ điều hành để tự động cấu hình URL/port, SSO và App Tunnel mà không cần nhúng SDK độc quyền hay App Wrapping`,
+          `Cho phép vượt qua bước kiểm duyệt App Store Review của Apple`,
+          `Tự động chuyển đổi file .exe sang .ipa`,
+          `Chỉ hoạt động độc quyền với một nhà cung cấp MDM duy nhất`
+        ],
+        ans: 0,
+        exp: `AppConfig Community thúc đẩy các tính năng gốc của iOS/Android giúp cấu hình tự động (zero-touch app setup), bảo mật và App Tunnel trung lập với mọi EMM/MDM.`
+      }
+    ]
+  },
+  {
+    id: 12,
+    code: `DEP320–330`,
+    title: `Tích hợp Mạng, Wi-Fi 802.1X & Per-App VPN`,
+    lede: `Cấu hình Wi-Fi doanh nghiệp, chứng chỉ SCEP/ACME, Per-App VPN (AppLayerVPN) và Network Relays.`,
+    keyTerms: [`802.1X`, `ACME / SCEP`, `Per-App VPN`, `Network Relay`, `Content Filter`],
+    cards: [
+      {
+        badge: `Kết nối an toàn`,
+        heading: `Wi-Fi 802.1X, ACME & Per-App VPN`,
+        body: `Kết hợp chứng chỉ số cấp tự động qua giao thức ACME/SCEP với hồ sơ Wi-Fi 802.1X (EAP-TLS) giúp thiết bị kết nối mạng công ty không cần mật khẩu tĩnh.`,
+        bullets: [
+          `Per-App VPN (AppLayerVPN / App Tunnel): Chỉ lưu lượng từ các ứng dụng công việc được chỉ định mới đi qua đường hầm VPN nội bộ.`,
+          `Network Relays: Giải pháp hiện đại thay thế VPN truyền thống, định tuyến lưu lượng HTTP/HTTPS/TCP qua máy chủ relay bảo mật (HTTP/3 MASQUE).`,
+          `Cisco Fastlane & Wi-Fi Roaming giúp tối ưu chuyển vùng mượt mà cho thiết bị di động trong nhà kho, bệnh viện.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Tính năng nào cho phép chỉ định duy nhất lưu lượng mạng của các ứng dụng doanh nghiệp được duyệt đi qua kết nối VPN về mạng nội bộ?`,
+        opts: [`Global HTTP Proxy`, `Per-App VPN (AppLayerVPN)`, `Always-on Personal Hotspot`, `AirPlay Security`],
+        ans: 1,
+        exp: `Per-App VPN (AppLayerVPN) liên kết các ứng dụng được quản lý với cấu hình VPN riêng, giữ tách biệt hoàn toàn với lưu lượng cá nhân.`
+      }
+    ]
+  },
+  {
+    id: 13,
+    code: `DEP340–370`,
+    title: `Bảo mật Thiết bị, FileVault & Khôi phục DFU`,
+    lede: `Managed Device Attestation, Activation Lock, FileVault 2 với Bootstrap Token, Smart Card và quy trình Revive/Restore macOS qua DFU Mode.`,
+    keyTerms: [`FileVault`, `Bootstrap Token`, `Managed Device Attestation`, `DFU Mode`, `Revive vs Restore`],
+    cards: [
+      {
+        badge: `Bảo mật macOS`,
+        heading: `FileVault, Secure Token & Bootstrap Token`,
+        body: `Trên macOS với Apple Silicon, mọi tài khoản quản trị hoặc người dùng chuẩn cần có Secure Token để mở khóa ổ đĩa FileVault.`,
+        bullets: [
+          `Bootstrap Token được tạo tự động khi đăng nhập hoặc qua ADE và gửi lên MDM Server (escrow), giúp tự động cấp Secure Token cho các tài khoản mạng/IdP tạo sau này (kể cả tài khoản Platform SSO).`,
+          `FileVault Recovery Key (PRK) được mã hóa và lưu giữ an toàn trên MDM Server.`,
+          `Managed Device Attestation dùng Secure Enclave xác thực phần cứng Apple chính hãng trước khi cấp chứng chỉ ACME/SCEP.`
+        ]
+      },
+      {
+        badge: `Khôi phục Firmware`,
+        heading: `Revive vs Restore Mac ở chế độ DFU Mode`,
+        body: `Khi máy Mac Apple Silicon hoặc chip T2 gặp lỗi firmware không khởi động được, cần kết nối USB-C trực tiếp với một máy Mac Host để vào DFU Mode thông qua Finder.`,
+        bullets: [
+          `Revive Mac (Thử trước): Nạp lại firmware BridgeOS/iBoot và RecoveryOS, KHÔNG xóa dữ liệu người dùng.`,
+          `Restore Mac (Bước cuối): Xóa sạch toàn bộ dữ liệu trên ổ đĩa nội bộ và khôi phục cài đặt gốc + cập nhật macOS mới nhất.`,
+          `Lưu ý cáp kết nối: Dùng cáp USB-C to USB-C hỗ trợ cả dữ liệu và sạc (KHÔNG dùng cáp Thunderbolt 3), cắm đúng cổng DFU trên máy lỗi và cắm trực tiếp không qua hub.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Sự khác biệt quan trọng nhất giữa tùy chọn "Revive Mac" và "Restore Mac" trong cửa sổ DFU trên Finder là gì?`,
+        opts: [
+          `Revive cập nhật/khôi phục firmware mà không xóa dữ liệu; Restore xóa sạch toàn bộ dữ liệu và đưa về cài đặt gốc`,
+          `Revive chỉ chạy trên chip Intel cũ; Restore chỉ chạy trên Apple Silicon`,
+          `Revive bắt buộc dùng cáp Thunderbolt 3; Restore dùng Wi-Fi`,
+          `Cả hai đều xóa sạch toàn bộ ổ cứng Macintosh HD`
+        ],
+        ans: 0,
+        exp: `Apple khuyến nghị luôn thử Revive trước vì nhanh hơn và giữ nguyên dữ liệu; chỉ dùng Restore khi Revive thất bại vì Restore sẽ xóa trắng máy.`
+      },
+      {
+        q: `Tại sao MDM Server cần lưu trữ (escrow) Bootstrap Token trên máy Mac chạy macOS hiện đại?`,
+        opts: [
+          `Để tự động cấp Secure Token cho các tài khoản người dùng tạo mới (như Platform SSO/IdP) mở khóa FileVault và phê duyệt cập nhật OS`,
+          `Để thay thế chứng chỉ APNs khi chứng chỉ hết hạn`,
+          `Để tắt System Integrity Protection (SIP) từ xa`,
+          `Để bỏ qua mật khẩu Wi-Fi 802.1X`
+        ],
+        ans: 0,
+        exp: `Bootstrap Token cho phép MDM tự động cấp Secure Token cho tài khoản mới đăng nhập trên máy Mac Apple Silicon, đặc biệt quan trọng với mô hình Platform SSO tạo user theo yêu cầu.`
+      }
+    ]
+  },
+  {
+    id: 14,
+    code: `DEP990`,
+    title: `Tổng ôn & Chiến lược Vận hành Doanh nghiệp`,
+    lede: `Tổng hợp các tình huống thực tế kết hợp ADE, DDM, Platform SSO, Content Caching và chẩn đoán sự cố trước kỳ thi chính thức.`,
+    keyTerms: [`Checklist`, `Troubleshooting`, `Migration`, `Compliance`],
+    cards: [
+      {
+        badge: `Tổng hợp kiến trúc`,
+        heading: `Luồng triển khai chuẩn mực End-to-End`,
+        body: `Kết nối toàn bộ 13 chương thành một quy trình vận hành hoàn chỉnh cho doanh nghiệp quy mô từ 50 đến 50.000 thiết bị.`,
+        bullets: [
+          `1. Hạ tầng: Mở TCP 5223 (APNs), thiết lập Mac Ethernet chạy Content Caching, xác minh tên miền & Federated Auth trên Apple Business.`,
+          `2. Đăng ký: Mua qua đại lý ủy quyền → gán MDM qua ADE → bật Supervision & Setup Assistant tinh gọn.`,
+          `3. Bảo mật & Định danh: Đẩy Platform SSO (Shared Device Keys), FileVault + Bootstrap Token escrow, chứng chỉ ACME Wi-Fi 802.1X.`,
+          `4. Vận hành bền vững: Dùng DDM cho Software Update & Status Reports; dùng Return to Service hoặc DFU Revive khi tái cấp phát/sửa lỗi.`
+        ]
+      }
+    ],
+    quizzes: [
+      {
+        q: `Một máy Mac mới mở hộp không hiển thị màn hình Remote Management trong Setup Assistant dù đã mua từ đại lý ủy quyền. Nguyên nhân hợp lý nhất là gì?`,
+        opts: [
+          `Thiết bị chưa được gán vào MDM Server trong Apple Business hoặc chưa kết nối Internet ở bước Setup Assistant`,
+          `Máy Mac chưa bật Content Caching`,
+          `Quản trị viên chưa chạy lệnh jamf recon`,
+          `Tài khoản chưa bật iCloud Photos`
+        ],
+        ans: 0,
+        exp: `ADE yêu cầu thiết bị phải được gán tới một MDM Server trong Apple Business, MDM Server phải có Profile Enrollment gán cho thiết bị đó, và máy Mac phải có kết nối mạng để liên lạc với máy chủ kích hoạt của Apple.`
+      }
+    ]
+  }
+];
+
+const LABS_DATA = [
+  {
+    id: `lab-ddm`,
+    title: `Kiểm tra trạng thái MDM, Profiles & Bootstrap Token`,
+    cmd: `sudo profiles status -type enrollment && sudo profiles status -type bootstraptoken`,
+    sampleOut: `Enrolled via DEP: Yes\nMDM enrollment: Yes (User Approved)\nBootstrap Token supported on server: YES\nBootstrap Token escrowed to server: YES`,
+    explain: `Xác nhận máy Mac đã đăng ký qua ADE (DEP), được User Approved và Bootstrap Token đã lưu thành công lên MDM server.`
+  },
+  {
+    id: `lab-cache`,
+    title: `Chẩn đoán dịch vụ Content Caching trên macOS`,
+    cmd: `AssetCacheManagerUtil status`,
+    sampleOut: `Activated: true\nCacheStatus: OK\nPort: 54321\nPeers: 10.10.20.15 (Active)\nBytesFromCacheToClients: 148.42 GB\nBytesFromOrigin: 21.10 GB`,
+    explain: `Kiểm tra tỷ lệ dữ liệu phục vụ từ cache nội bộ so với tải từ Internet, cũng như các máy Peer cache lân cận.`
+  },
+  {
+    id: `lab-psso`,
+    title: `Kiểm tra trạng thái Platform SSO & Khóa thiết bị`,
+    cmd: `app-sso platform -s`,
+    sampleOut: `Device Registration: Completed (Shared Device Keys: Enabled)\nAuthentication Method: UserSecureEnclaveKey\nUser Registration: Completed (user@company.com)\nPRT Status: Valid (Expires in 14 days)`,
+    explain: `Kiểm tra trạng thái đăng ký thiết bị, phương thức xác thực Secure Enclave và Primary Refresh Token (PRT) của Platform SSO.`
+  },
+  {
+    id: `lab-fv`,
+    title: `Kiểm tra FileVault & Danh sách Secure Token`,
+    cmd: `fdesetup status && sysadminctl -secureTokenStatus admin`,
+    sampleOut: `FileVault is On.\nEncryption in progress: No.\nSecure token is ENABLED for user admin`,
+    explain: `Xác minh ổ đĩa đã mã hóa FileVault hoàn tất và tài khoản quản trị đang nắm giữ Secure Token.`
+  },
+  {
+    id: `lab-apns`,
+    title: `Kiểm tra kết nối Outbound tới APNs (TCP 5223)`,
+    cmd: `nc -vz gateway.push.apple.com 5223`,
+    sampleOut: `Connection to gateway.push.apple.com port 5223 [tcp/*] succeeded!`,
+    explain: `Xác nhận tường lửa doanh nghiệp không chặn cổng TCP 5223 tới dải mạng 17.0.0.0/8 của Apple Push Notification service.`
+  }
+];
+
+/* Generate full 60-question bilingual DEP110 exam bank grounded in Apple Platform Deployment & DEP110 */
+const EXAM_BANK = [
+  { ch: 2, vi: `Cổng mạng outbound mặc định nào phải mở tới dải 17.0.0.0/8 để thiết bị Apple nhận push notification từ APNs?`, en: `Which default outbound TCP port must be open to 17.0.0.0/8 for Apple devices to receive APNs push notifications?`, opts: [`TCP 5223`, `TCP 8080`, `UDP 5060`, `TCP 22`], ans: 0, exp: `APNs sử dụng outbound TCP port 5223 tới dải 17.0.0.0/8 (fallback TCP 443).` },
+  { ch: 2, vi: `Điều gì xảy ra nếu chứng chỉ APNs Push Certificate của MDM Server hết hạn mà không được gia hạn?`, en: `What happens if an MDM server's APNs Push Certificate expires without renewal?`, opts: [`MDM không thể gửi lệnh đánh thức hay đẩy profile tới các thiết bị đang quản lý`, `Tất cả thiết bị tự động xóa trắng dữ liệu`, `Mật khẩu FileVault bị vô hiệu hóa ngay lập tức`, `Apple Business tự động chuyển sang dùng Wi-Fi Caching`], ans: 0, exp: `Hết hạn APNs khiến MDM mất kênh liên lạc đẩy lệnh tới thiết bị.` },
+  { ch: 2, vi: `Khi gia hạn chứng chỉ APNs Push Certificate, quản trị viên phải tuân thủ quy tắc nào?`, en: `When renewing an APNs Push Certificate, which rule must the administrator follow?`, opts: [`Dùng đúng Apple Account đã tạo chứng chỉ ban đầu`, `Tạo một Apple Account mới hoàn toàn mỗi năm`, `Xóa toàn bộ thiết bị khỏi MDM trước khi gia hạn`, `Tắt Supervision trên tất cả iPhone`], ans: 0, exp: `Nếu dùng Apple Account khác sẽ sinh chứng chỉ Topic ID mới, khiến toàn bộ thiết bị hiện tại mất kết nối MDM và phải enroll lại.` },
+  { ch: 2, vi: `Trong Declarative Device Management (DDM), có những loại Declaration nào?`, en: `Which declaration types are defined in Declarative Device Management (DDM)?`, opts: [`Configurations, Assets, Activations, Management`, `Policies, Scripts, Packages, Logs`, `Users, Groups, Domains, Primes`, `Wi-Fi, VPN, Ethernet, Cellular`], ans: 0, exp: `4 loại Declaration trong DDM là Configurations, Assets, Activations và Management.` },
+  { ch: 2, vi: `Điểm khác biệt cốt lõi giữa Configuration Profile (.mobileconfig) và Jamf Policy là gì?`, en: `What is the core difference between a Configuration Profile (.mobileconfig) and a Jamf Policy?`, opts: [`Profile cấu hình thiết lập OS gốc (Wi-Fi, Passcode, Restrictions); Policy chạy script Bash/Zsh, cài .pkg/.dmg và cập nhật inventory`, `Profile chỉ chạy trên macOS; Policy chạy trên cả iOS và tvOS`, `Policy không cần mạng để hoạt động còn Profile chạy qua USB`, `Profile dùng để gỡ bỏ FileVault còn Policy dùng để tạo APNs`], ans: 0, exp: `Profile dựa trên chuẩn MDM của Apple cho mọi nền tảng Apple; Jamf Policy dùng Jamf binary trên macOS để thực thi script/gói cài đặt/recon.` },
+  { ch: 2, vi: `Trên hệ điều hành nào sau đây bạn có thể triển khai Jamf Policy để chạy custom Zsh script?`, en: `On which Apple operating system can you deploy a Jamf Policy to execute a custom Zsh script?`, opts: [`macOS`, `iOS`, `iPadOS`, `tvOS`], ans: 0, exp: `Chỉ macOS hỗ trợ agent/binary chạy script Bash/Zsh qua Jamf Policy; iOS/iPadOS/tvOS chỉ nhận MDM Profiles và Commands.` },
+  { ch: 2, vi: `Lợi ích chính của DDM Status Reports đối với MDM Server là gì?`, en: `What is the primary benefit of DDM Status Reports for an MDM server?`, opts: [`Thiết bị chủ động báo cáo ngay khi trạng thái thay đổi, giảm tải polling cho server`, `Cho phép chạy file .exe trên Mac`, `Loại bỏ hoàn toàn yêu cầu mật khẩu người dùng`, `Tăng tốc độ sạc pin qua cổng DFU`], ans: 0, exp: `DDM giúp client tự chủ báo cáo trạng thái bất đồng bộ (proactive status reporting).` },
+  { ch: 3, vi: `Phương thức đăng ký nào cho phép triển khai Zero-touch ngay khi người dùng mở hộp thiết bị công ty?`, en: `Which enrollment method enables zero-touch deployment right out of the box for organization-owned devices?`, opts: [`Automated Device Enrollment (ADE)`, `Account-Driven User Enrollment`, `Manual Profile Download`, `Apple Configurator Tethered Only`], ans: 0, exp: `ADE tự động liên kết thiết bị với MDM khi kích hoạt lần đầu qua Internet.` },
+  { ch: 3, vi: `Chế độ Device Supervision mang lại quyền kiểm soát nào sau đây?`, en: `Which capability does Device Supervision unlock on Apple devices?`, opts: [`Áp đặt các Restrictions nâng cao, Activation Lock bypass và ngăn gỡ bỏ MDM profile`, `Đọc toàn bộ tin nhắn iMessage cá nhân trên BYOD`, `Thay đổi số serial phần cứng`, `Bỏ qua xác thực 802.1X`], ans: 0, exp: `Supervision chỉ áp dụng cho thiết bị thuộc sở hữu tổ chức, cung cấp toàn quyền cấu hình sâu.` },
+  { ch: 3, vi: `Đặc điểm bảo vệ quyền riêng tư của User Enrollment (BYOD) là gì?`, en: `How does User Enrollment protect user privacy on BYOD devices?`, opts: [`Tách dữ liệu công việc sang phân vùng APFS mã hóa riêng, không cho phép Wipe toàn bộ máy`, `Mã hóa toàn bộ ảnh cá nhân bằng khóa công ty`, `Bắt buộc bật Supervision`, `Ghi lại lịch sử duyệt web Safari cá nhân`], ans: 0, exp: `User Enrollment tách biệt dữ liệu Managed Apple Account và dữ liệu cá nhân.` },
+  { ch: 3, vi: `Tính năng Return to Service giúp ích gì cho mô hình thiết bị dùng chung (Shared Devices)?`, en: `What does Return to Service enable for shared Apple devices?`, opts: [`Xóa sạch dữ liệu và tự động kết nối Wi-Fi để tái đăng ký MDM không cần thao tác thủ công`, `Lưu lại mật khẩu của người dùng trước cho người sau`, `Tắt FileVault trên macOS`, `Chuyển iPad thành Content Cache server`], ans: 0, exp: `Return to Service gửi cấu hình Wi-Fi + MDM profile kèm lệnh EraseDevice để máy tự sẵn sàng cho ca làm việc tiếp theo.` },
+  { ch: 3, vi: `Người dùng bắt đầu Account-Driven User Enrollment trên iPhone ở đâu?`, en: `Where does a user initiate Account-Driven User Enrollment on an iPhone?`, opts: [`Settings > General > VPN & Device Management`, `App Store > Updates`, `Finder > DFU Mode`, `Safari > Bookmarks`], ans: 0, exp: `Người dùng đăng nhập bằng Managed Apple Account ngay trong Settings > General > VPN & Device Management.` },
+  { ch: 4, vi: `Apple Business là sự hợp nhất của những dịch vụ nào?`, en: `Which three Apple offerings were combined into Apple Business?`, opts: [`Apple Business Manager, Apple Business Essentials và Apple Business Connect`, `Apple School Manager, iCloud+ và AppleCare+`, `Jamf Pro, Intune và Kandji`, `Apple Configurator, Finder và Terminal`], ans: 0, exp: `Apple Business Manager nay là Apple Business, tích hợp cả Essentials và Connect.` },
+  { ch: 4, vi: `Tệp Server Token (.p7m) tải xuống từ Apple Business dùng để làm gì?`, en: `What is the Server Token (.p7m) downloaded from Apple Business used for?`, opts: [`Kết nối bảo mật giữa Apple Business và MDM Server để đồng bộ thiết bị ADE`, `Kích hoạt Touch ID trên MacBook`, `Mở khóa DFU Mode`, `Ký ứng dụng iOS trên Xcode`], ans: 0, exp: `Server Token xác thực kết nối ADE giữa Apple Business và MDM.` },
+  { ch: 4, vi: `Khi nào quản trị viên mới nên nhấn nút "Release Device" trong Apple Business?`, en: `When should an administrator click "Release Device" in Apple Business?`, opts: [`Khi thiết bị được bán thanh lý, trả lại hoặc ngừng sở hữu vĩnh viễn`, `Mỗi khi muốn chuyển thiết bị sang MDM server khác`, `Mỗi lần cài lại macOS`, `Khi nhân viên đổi mật khẩu`], ans: 0, exp: `Release Device ngắt vĩnh viễn số serial khỏi tổ chức; nếu đổi MDM chỉ cần Reassign.` },
+  { ch: 4, vi: `Content Token (.vpptoken) trong Apple Business có vai trò gì?`, en: `What is the role of a Content Token (.vpptoken) in Apple Business?`, opts: [`Cho phép MDM Server đồng bộ và phân phối giấy phép ứng dụng/sách (Apps & Books)`, `Cấp chứng chỉ Wi-Fi 802.1X`, `Khởi tạo Bootstrap Token`, `Gia hạn chứng chỉ APNs`], ans: 0, exp: `Content Token kết nối kho giấy phép Apps and Books với MDM.` },
+  { ch: 5, vi: `Thời hạn tạm thời (provisional period) khi thêm thiết bị vào Apple Business qua Apple Configurator là bao nhiêu ngày?`, en: `How long is the provisional period when a device is manually added to Apple Business via Apple Configurator?`, opts: [`30 ngày`, `7 ngày`, `60 ngày`, `14 ngày`], ans: 0, exp: `Trong 30 ngày đầu, người dùng có tùy chọn Leave Remote Management trước khi máy bị khóa vĩnh viễn vào tổ chức.` },
+  { ch: 5, vi: `Để thêm một máy Mac Apple Silicon vào Apple Business bằng ứng dụng Apple Configurator trên iPhone, máy Mac phải đang ở trạng thái nào?`, en: `To add an Apple Silicon Mac to Apple Business using Apple Configurator on iPhone, what state must the Mac be in?`, opts: [`Ở màn hình Setup Assistant (sau khi xóa trắng)`, `Đang đăng nhập vào Desktop của người dùng`, `Đang tắt nguồn hoàn toàn`, `Đang chạy Content Caching`], ans: 0, exp: `Máy Mac phải ở bước Setup Assistant (chưa hoàn tất thiết lập) để quét mã ghép đôi.` },
+  { ch: 6, vi: `Cấu hình kết nối mạng được Apple khuyến nghị cho máy Mac chạy Content Caching là gì?`, en: `What network connection does Apple recommend for a Mac running Content Caching?`, opts: [`Một kết nối Ethernet có dây duy nhất`, `Chỉ dùng Wi-Fi 2.4 GHz`, `Kết hợp song song Wi-Fi và Ethernet`, `Kết nối qua Bluetooth PAN`], ans: 0, exp: `Apple khuyến nghị dùng một kết nối Ethernet có dây duy nhất để đạt hiệu năng và độ ổn định cao nhất.` },
+  { ch: 6, vi: `Content Caching trên macOS lưu trữ loại dữ liệu nào để tăng tốc tải về cho thiết bị cục bộ?`, en: `What types of data does macOS Content Caching store to speed up local downloads?`, opts: [`Bản cập nhật OS, ứng dụng App Store và dữ liệu iCloud của người dùng`, `Mật khẩu tài khoản ngân hàng của nhân viên`, `Tệp cấu hình .mobileconfig của MDM khác`, `Cơ sở dữ liệu Microsoft Entra ID`], ans: 0, exp: `Content Caching lưu phần mềm phân phối bởi Apple và dữ liệu iCloud.` },
+  { ch: 6, vi: `Tại sao quản trị viên không xem được danh sách chi tiết từng file mà một iPhone cụ thể đã tải qua Content Caching?`, en: `Why can't an admin view individual asset requests per specific client device in Content Caching?`, opts: [`Vì lý do bảo vệ quyền riêng tư theo thiết kế của Apple; chỉ có thống kê tổng hợp (aggregate metrics)`, `Vì Content Caching không hoạt động với iPhone`, `Vì thiếu chứng chỉ APNs`, `Vì phải bật FileVault mới ghi được log từng người`], ans: 0, exp: `Apple ẩn thông tin chi tiết cấp client để bảo vệ quyền riêng tư, chỉ cung cấp số liệu tổng hợp.` },
+  { ch: 6, vi: `Khi có nhiều Content Cache trên mạng không có sẵn tệp client yêu cầu, thứ tự tìm kiếm chuẩn là gì?`, en: `When multiple Content Caches exist and one lacks a requested item, what is the lookup order?`, opts: [`Hỏi các Peer cache ngang hàng → hỏi Parent cache (nếu có) → tải từ Apple qua Internet`, `Tải thẳng từ Internet ngay lập tức`, `Hỏi máy iPhone gần nhất qua AirDrop`, `Yêu cầu khởi động lại router`], ans: 0, exp: `Content caches tự động thành Peer của nhau trước khi fallback lên Parent hoặc Internet.` },
+  { ch: 6, vi: `Thiết lập nào giúp phục vụ Content Caching cho nhiều dải IP Public khác nhau trong doanh nghiệp lớn?`, en: `Which mechanism helps configure Content Caching across multiple public IP addresses?`, opts: [`Sử dụng bản ghi DNS TXT (DNS TXT records)`, `Cài đặt Jamf Policy trên iPad`, `Bật chế độ DFU trên máy Mac`, `Tắt Supervision`], ans: 0, exp: `DNS TXT records giúp client khám phá Content Cache khi mạng có nhiều IP public.` },
+  { ch: 7, vi: `Platform SSO trên macOS hỗ trợ các phương thức xác thực nào từ macOS 14 trở lên?`, en: `Which authentication methods are supported by Platform SSO on macOS 14 and later?`, opts: [`Password, UserSecureEnclaveKey và SmartCard`, `Chỉ hỗ trợ mã PIN 4 số`, `Chỉ hỗ trợ nhận diện giọng nói Siri`, `Chỉ hỗ trợ mật khẩu Wi-Fi WPA2`], ans: 0, exp: `macOS 14+ hỗ trợ Password, UserSecureEnclaveKey (passwordless Touch ID) và SmartCard.` },
+  { ch: 7, vi: `Thiết lập "Use Shared Device Keys = Enabled" trong Platform SSO có tác dụng gì?`, en: `What does enabling "Use Shared Device Keys" in Platform SSO do?`, opts: [`Dùng chung khóa ký/mã hóa cấp thiết bị cho mọi user trên cùng máy Mac, hỗ trợ máy dùng chung & Network Authorization`, `Chia sẻ khóa FileVault lên mạng công cộng`, `Tắt tính năng khóa màn hình`, `Xóa mật khẩu local của admin`], ans: 0, exp: `Shared Device Keys gắn định danh khóa mật mã ở cấp phần cứng máy Mac cho mọi người dùng IdP đăng nhập vào máy đó.` },
+  { ch: 7, vi: `Để dùng Platform SSO với Microsoft Entra ID trên macOS thông qua Intune, ứng dụng nào bắt buộc phải cài trên máy Mac?`, en: `Which app must be installed on macOS to use Microsoft Entra ID Platform SSO?`, opts: [`Microsoft Intune Company Portal (v5.2404.0 trở lên)`, `Microsoft Word`, `Apple Configurator`, `Xcode Command Line Tools`], ans: 0, exp: `Extension SSO của Microsoft nằm bên trong ứng dụng Company Portal phiên bản 5.2404.0+.` },
+  { ch: 7, vi: `Giá trị Token To User Mapping > Account Name được Apple/Microsoft khuyến nghị để lấy tiền tố UPN làm tên tài khoản ngắn macOS là gì?`, en: `Which Token To User Mapping > Account Name value uses the IdP UPN prefix as the macOS short account name?`, opts: [`com.apple.PlatformSSO.AccountShortName`, `com.apple.FileVault.RecoveryKey`, `UBF8T346G9`, `{{DEVICEREGISTRATION}}`], ans: 0, exp: `com.apple.PlatformSSO.AccountShortName (hỗ trợ đầy đủ từ macOS 15.4+) ánh xạ tiền tố UPN (ví dụ user@contoso.com -> user).` },
+  { ch: 7, vi: `Tính năng mới nào của Platform SSO xuất hiện từ macOS 26 để đồng bộ đăng ký ngay khi mở hộp?`, en: `Which Platform SSO capability introduced in macOS 26 integrates registration during initial setup?`, opts: [`Platform SSO during Automated Device Enrollment (ADE)`, `Chạy ứng dụng Android trên Mac`, `Tắt Gatekeeper vĩnh viễn`, `Khởi động macOS từ iCloud Drive`], ans: 0, exp: `macOS 26 bổ sung Platform SSO trong luồng Automated Device Enrollment, Tap to Login và Authenticated Guest Mode.` },
+  { ch: 7, vi: `Trong macOS 15+, thiết lập FileVault Policy = AttemptAuthentication dùng để làm gì?`, en: `In macOS 15+, what is the purpose of setting FileVault Policy to AttemptAuthentication in Platform SSO?`, opts: [`Cho phép xác thực mật khẩu Microsoft Entra ID trực tiếp tại màn hình mở khóa FileVault khi bật máy`, `Tắt mã hóa FileVault khi người dùng gập máy`, `Tạo mật khẩu ngẫu nhiên mỗi lần khởi động`, `Mở khóa FileVault bằng mã QR từ Apple Watch`], ans: 0, exp: `AttemptAuthentication xác minh mật khẩu IdP ngay ở màn hình FileVault unlock khi khởi động Mac.` },
+  { ch: 7, vi: `Khi cấu hình đồng thời Platform SSO và Kerberos SSO Extension trên macOS, quy tắc nào phải tuân thủ?`, en: `When combining Platform SSO with the Kerberos SSO extension on macOS, which rule applies?`, opts: [`Một domain cụ thể chỉ dùng một SSO extension duy nhất và đặt syncLocalPassword = FALSE trong Kerberos SSO`, `Bật cả hai extension xử lý cùng một domain đăng nhập`, `Đặt syncLocalPassword = TRUE trên cả hai`, `Gỡ bỏ chứng chỉ SCEP trước khi cấu hình`], ans: 0, exp: `Apple yêu cầu mỗi domain chỉ gán 1 SSO extension và tắt syncLocalPassword ở Kerberos để tránh xung đột.` },
+  { ch: 8, vi: `Managed Apple Account khác với Apple Account cá nhân ở điểm nào?`, en: `How does a Managed Apple Account differ from a personal Apple Account?`, opts: [`Do tổ chức sở hữu/quản lý, hỗ trợ reset mật khẩu bởi IT và tách biệt dữ liệu doanh nghiệp`, `Dùng để mua game trên Apple Arcade`, `Không thể dùng với thiết bị iPadOS`, `Bắt buộc gắn thẻ tín dụng cá nhân`], ans: 0, exp: `Managed Apple Account thuộc quyền kiểm soát của tổ chức trong Apple Business.` },
+  { ch: 8, vi: `Trước khi bật Federated Authentication cho tên miền công ty trong Apple Business, tổ chức cần làm bước nào?`, en: `Before enabling Federated Authentication for a domain in Apple Business, what prerequisite step is required?`, opts: [`Xác minh quyền sở hữu tên miền (Domain Verification) qua bản ghi DNS TXT`, `Xóa toàn bộ thiết bị ADE`, `Chuyển tất cả máy Mac sang Windows`, `Cài đặt Content Caching trên iPhone`], ans: 0, exp: `Phải xác minh tên miền bằng bản ghi DNS TXT trước khi liên kết với IdP.` },
+  { ch: 9, vi: `Thành phần nào trong MDM được dùng để thu thập dữ liệu thời gian thực (phiên bản OS, dung lượng trống, trạng thái bảo mật) theo yêu cầu?`, en: `Which MDM mechanism collects on-demand information like OS version or security status from managed devices?`, opts: [`Device Management Queries`, `Device Management Restrictions`, `Setup Assistant Skip Keys`, `Web Clips Payload`], ans: 0, exp: `MDM Queries (DeviceInformation, InstalledApplicationList, SecurityInfo) dùng để truy vấn thông tin thiết bị.` },
+  { ch: 9, vi: `Khóa cấu hình nào cho phép bỏ qua các màn hình không cần thiết (như Siri, Screen Time, Appearance) khi người dùng thiết lập máy mới qua ADE?`, en: `Which payload/setting allows skipping screens like Siri or Screen Time during initial ADE setup?`, opts: [`Setup Assistant Skip Keys (trong ADE Enrollment Profile)`, `Energy Saver Payload`, `Dock Payload`, `AirPrint Payload`], ans: 0, exp: `Quản trị viên chọn các màn hình cần ẩn trong Setup Assistant của Enrollment Profile.` },
+  { ch: 9, vi: `Trong DDM, thành phần nào kiểm tra điều kiện cục bộ (ví dụ phiên bản OS >= 15) trước khi kích hoạt một Configuration?`, en: `In DDM, which declaration type evaluates local predicates before applying linked Configurations?`, opts: [`Activations`, `Assets`, `Payloads`, `Queries`], ans: 0, exp: `Activation chứa danh sách Configuration và Predicate điều kiện để thiết bị tự đánh giá.` },
+  { ch: 10, vi: `Tính năng nào giúp Apple phát hành các bản vá bảo mật khẩn cấp nhỏ gọn mà không cần cập nhật toàn bộ phiên bản macOS/iOS lớn?`, en: `Which feature delivers rapid security fixes between major OS updates?`, opts: [`Background Security Improvements`, `Apple Configurator Revive`, `Content Caching Peer`, `User Enrollment`], ans: 0, exp: `Background Security Improvements (Rapid Security Responses) vá nhanh lỗ hổng bảo mật giữa các bản cập nhật OS.` },
+  { ch: 10, vi: `Mục đích của chương trình AppleSeed for IT là gì?`, en: `What is the purpose of the AppleSeed for IT program?`, opts: [`Cho phép đội ngũ IT thử nghiệm các bản OS beta trước khi phát hành chính thức để kiểm tra tương thích`, `Mua phần cứng Apple với giá ưu đãi`, `Sửa chữa phần cứng Mac miễn phí`, `Cấp chứng chỉ APNs tự động`], ans: 0, exp: `AppleSeed for IT cung cấp quyền truy cập sớm bản beta cho tổ chức thử nghiệm.` },
+  { ch: 10, vi: `Thời gian tối đa có thể trì hoãn hiển thị bản cập nhật phần mềm (Software Update Deferral) cho thiết bị Supervised là bao nhiêu ngày?`, en: `What is the maximum deferral period (in days) that MDM can set to delay visibility of software updates on supervised devices?`, opts: [`90 ngày`, `30 ngày`, `180 ngày`, `7 ngày`], ans: 0, exp: `MDM hỗ trợ trì hoãn hiển thị bản cập nhật tối đa 90 ngày.` },
+  { ch: 11, vi: `Ưu điểm của việc gán giấy phép ứng dụng theo Device Assignment (Device-based VPP) so với User Assignment là gì?`, en: `What is the advantage of Device-based app assignment over User-based assignment?`, opts: [`Không yêu cầu người dùng đăng nhập Apple Account trên thiết bị để nhận app`, `Cho phép cài app Windows lên iPad`, `Miễn phí toàn bộ ứng dụng trả phí trên App Store`, `Không cần kết nối Internet để tải app`], ans: 0, exp: `Device-based assignment cho phép đẩy app trực tiếp xuống thiết bị mà không cần Apple Account.` },
+  { ch: 11, vi: `Cách phân phối ứng dụng nội bộ do công ty tự phát triển cho iOS/iPadOS an toàn nhất hiện nay là gì?`, en: `What is the recommended method to distribute private, organization-specific iOS/iPadOS apps?`, opts: [`Custom Apps (thông qua Apple Business và Organization ID)`, `Chia sẻ file .ipa qua email công ty`, `Đăng công khai lên App Store cho mọi người tải`, `Chép trực tiếp qua Bluetooth`], ans: 0, exp: `Custom Apps cung cấp phân phối riêng tư thông qua Apple Business.` },
+  { ch: 11, vi: `Cộng đồng AppConfig (AppConfig Community) giải quyết bài toán gì trong quản trị ứng dụng di động?`, en: `What problem does the AppConfig Community solve for enterprise mobile apps?`, opts: [`Chuẩn hóa cấu hình app tự động (URL, SSO, App Tunnel, Access Control) bằng API gốc OS mà không cần App Wrapping`, `Thay thế hoàn toàn MDM server`, `Tạo chứng chỉ DFU cho MacBook`, `Quản lý phần cứng máy in AirPrint`], ans: 0, exp: `AppConfig cung cấp best practices dựa trên khả năng gốc của OS (Managed App Configuration).` },
+  { ch: 11, vi: `Chính sách "Manage Organizational Data" trên iOS/iPadOS giúp ngăn chặn rủi ro nào?`, en: `What risk does the "Manage Organizational Data" capability mitigate on iOS/iPadOS?`, opts: [`Ngăn người dùng sao chép/mở tài liệu công việc từ ứng dụng được quản lý sang ứng dụng cá nhân không được quản lý`, `Ngăn thiết bị kết nối vào bộ sạc USB lạ`, `Chặn cài đặt bản cập nhật macOS`, `Ngăn nhân viên đổi hình nền màn hình khóa`], ans: 0, exp: `Manage Organizational Data (Open-in management) cách ly luồng dữ liệu giữa app công ty và app cá nhân.` },
+  { ch: 12, vi: `Giao thức nào tự động cấp phát và gia hạn chứng chỉ số cho thiết bị Apple với độ bảo mật cao và xác thực phần cứng?`, en: `Which modern protocol automates certificate issuance and renewal with hardware-backed attestation on Apple devices?`, opts: [`ACME (Automated Certificate Management Environment)`, `FTP`, `Telnet`, `L2TP`], ans: 0, exp: `ACME kết hợp tốt với Managed Device Attestation để cấp chứng chỉ tự động và an toàn hơn SCEP truyền thống.` },
+  { ch: 12, vi: `Khi doanh nghiệp muốn lọc nội dung web độc hại trên Safari của thiết bị di động được giám sát, họ dùng payload nào?`, en: `Which payload enables filtering web content on supervised Apple devices?`, opts: [`Web Content Filter payload`, `Dock payload`, `Fonts payload`, `Time Machine payload`], ans: 0, exp: `Web Content Filter cho phép thiết lập danh sách web chặn/cho phép hoặc plugin lọc nội dung.` },
+  { ch: 12, vi: `Sự khác biệt của Network Relay so với VPN truyền thống trên nền tảng Apple là gì?`, en: `How does Network Relay differ from a traditional VPN on Apple platforms?`, opts: [`Hoạt động ở tầng HTTP/3 MASQUE nhẹ hơn, hỗ trợ định tuyến theo tên miền/app cụ thể mà không tạo tunnel toàn thiết bị`, `Chỉ chạy qua cáp USB-C`, `Yêu cầu tắt Wi-Fi khi sử dụng`, `Chỉ dùng cho Apple Watch`], ans: 0, exp: `Network Relay bảo mật truy cập tài nguyên nội bộ hoặc ẩn danh lưu lượng hiện đại hơn VPN truyền thống.` },
+  { ch: 13, vi: `Managed Device Attestation sử dụng thành phần phần cứng nào để chứng minh thiết bị là phần cứng Apple chính hãng?`, en: `Which hardware component does Managed Device Attestation rely on to prove a device is genuine Apple hardware?`, opts: [`Secure Enclave`, `Cổng MagSafe`, `Màn hình Retina`, `Quạt tản nhiệt`], ans: 0, exp: `Secure Enclave tạo khóa phần cứng không thể xuất ra ngoài để Apple xác thực tính toàn vẹn của thiết bị.` },
+  { ch: 13, vi: `Tại sao nên cấu hình Bootstrap Token cho máy Mac Apple Silicon trong doanh nghiệp?`, en: `Why should Bootstrap Token be enabled and escrowed for Apple Silicon Macs?`, opts: [`Tự động cấp Secure Token cho tài khoản mới tạo (như Platform SSO) để mở khóa FileVault và cài cập nhật OS`, `Để tăng dung lượng RAM của máy Mac`, `Để cài đặt iOS lên MacBook`, `Để bỏ qua mật khẩu đăng nhập khi mất máy`], ans: 0, exp: `Bootstrap Token là chìa khóa giúp quản lý Secure Token tự động ở quy mô lớn.` },
+  { ch: 13, vi: `Khi một máy Mac Apple Silicon gặp lỗi firmware và không thể khởi động, bước xử lý ĐẦU TIÊN được Apple khuyến nghị trong DFU Mode là gì?`, en: `When an Apple Silicon Mac fails to boot due to a firmware issue, what is the FIRST recommended action in DFU Mode?`, opts: [`Revive Mac (giữ nguyên dữ liệu người dùng)`, `Restore Mac (xóa sạch dữ liệu ngay lập tức)`, `Tháo pin máy Mac`, `Chạy lệnh jamf removeFramework`], ans: 0, exp: `Apple hướng dẫn luôn thử Revive trước vì nhanh và không làm mất dữ liệu.` },
+  { ch: 13, vi: `Loại cáp nào KHÔNG nên dùng khi thực hiện Revive hoặc Restore firmware Mac qua chế độ DFU?`, en: `Which type of cable should NOT be used when reviving or restoring Mac firmware in DFU mode?`, opts: [`Cáp Thunderbolt 3`, `Cáp USB-C to USB-C hỗ trợ cả dữ liệu và sạc`, `Cáp USB-C chính hãng đi kèm bộ sạc (nếu hỗ trợ data)`, `Cáp nối trực tiếp vào cổng DFU`], ans: 0, exp: `Tài liệu Apple Support ghi rõ: cáp phải hỗ trợ cả data và charging, và KHÔNG được là cáp Thunderbolt 3; phải cắm trực tiếp không qua hub.` },
+  { ch: 13, vi: `Trên máy Mac laptop Apple Silicon, tổ hợp phím nào giữ cùng nút nguồn (Power) để đưa máy vào DFU Mode?`, en: `On an Apple Silicon Mac laptop, which key combination is held with the Power button to enter DFU Mode?`, opts: [`Control (trái) + Option (trái) + Shift (phải) + Power button`, `Command + R`, `Option + Command + P + R`, `Shift (trái) + Caps Lock`], ans: 0, exp: `Nhấn nhả nút nguồn rồi giữ ngay Control (trái) + Option (trái) + Shift (phải) + Power khoảng 10 giây, sau đó thả 3 phím và giữ Power thêm tối đa 10 giây.` },
+  { ch: 13, vi: `Trên máy Mac desktop (như Mac mini / Mac Studio), cách đưa máy vào DFU Mode là gì?`, en: `How do you put a desktop Mac (e.g., Mac mini / Mac Studio) into DFU Mode?`, opts: [`Rút dây nguồn, nhấn giữ nút nguồn trong khi cắm lại dây nguồn và giữ tiếp tối đa 10 giây`, `Nhấn giữ Control + Option + Shift`, `Cắm 2 dây nguồn cùng lúc`, `Nhấn nút nguồn 5 lần liên tiếp`], ans: 0, exp: `Máy Mac desktop vào DFU bằng cách rút nguồn, giữ nút Power rồi cắm nguồn lại và giữ tiếp tới khi Finder trên máy Host hiện DFU Mode.` },
+  { ch: 13, vi: `Activation Lock trên thiết bị công ty nên được quản lý như thế nào để tránh kẹt thiết bị khi nhân viên nghỉ việc?`, en: `How should organizations manage Activation Lock on company-owned devices to avoid locked hardware when employees leave?`, opts: [`Quản lý qua MDM (lưu Activation Lock Bypass Code) hoặc tắt tính năng người dùng tự bật Activation Lock cá nhân`, `Yêu cầu nhân viên viết mật khẩu iCloud cá nhân lên giấy`, `Không bao giờ bật passcode trên iPhone`, `Bán máy đi và mua máy mới`], ans: 0, exp: `MDM tạo và lưu Bypass Code cho thiết bị Supervised, hoặc chặn bật Find My bằng Apple Account cá nhân.` },
+  { ch: 13, vi: `Smart Card (PIV/CAC) trên macOS có thể được cấu hình để yêu cầu xác thực như thế nào?`, en: `How can Smart Card authentication be enforced on macOS?`, opts: [`Smart Card-only authentication (bắt buộc dùng thẻ thông minh kèm PIN thay cho mật khẩu)`, `Chỉ dùng để mở khóa trình duyệt Chrome`, `Không hỗ trợ trên FileVault`, `Yêu cầu tắt System Extensions`], ans: 0, exp: `macOS hỗ trợ Smart Card-only authentication và mở khóa FileVault bằng Smart Card.` },
+  { ch: 14, vi: `Nếu Finder trên máy Host không hiện cửa sổ DFU sau khi đưa máy Mac lỗi vào DFU Mode, bước kiểm tra nào sau đây đúng theo Apple Support?`, en: `If Finder on the host Mac doesn't show the DFU window, which troubleshooting step matches Apple Support guidance?`, opts: [`Kiểm tra Finder Settings > Sidebar đã bật "CDs, DVDs, and iOS Devices", cắm đúng cổng DFU và đổi cáp USB-C (không dùng Thunderbolt 3 hay hub)`, `Cài lại hệ điều hành Windows trên máy Host`, `Rút cáp USB-C và kết nối qua Wi-Fi`, `Tắt nguồn máy Host và chờ 24 giờ`], ans: 0, exp: `Kiểm tra mục Sidebar trong Finder Settings, kiểm tra đúng cổng DFU, đảm bảo không cắm thiết bị USB khác và dùng cáp USB-C chuẩn data+charge.` },
+  { ch: 14, vi: `Một doanh nghiệp muốn tất cả máy Mac mới tự động cấu hình Wi-Fi, mã hóa FileVault, đăng nhập bằng Microsoft Entra ID ngay lần bật máy đầu tiên và tải cập nhật OS từ mạng LAN. Bộ giải pháp nào kết hợp ĐẦY ĐỦ nhất?`, en: `An enterprise wants new Macs to auto-configure Wi-Fi, enforce FileVault, log in via Microsoft Entra ID at initial setup, and cache OS updates on LAN. Which combination fits best?`, opts: [`ADE + MDM Profiles (Wi-Fi/FileVault) + Platform SSO (Shared Device Keys) + macOS Ethernet Content Caching`, `Chỉ dùng Jamf Policy và AirDrop`, `User Enrollment + Tài khoản iCloud cá nhân`, `Apple Configurator + DFU Restore hàng ngày`], ans: 0, exp: `ADE + MDM Profiles + Platform SSO + Content Caching Ethernet là kiến trúc chuẩn cho kịch bản triển khai doanh nghiệp.` },
+  { ch: 14, vi: `Khi thực hiện di chuyển (Migration) các máy đang quản lý từ MDM cũ sang MDM mới, điều gì cần chuẩn bị trước?`, en: `When planning a device management migration to a new MDM service, what must be prepared?`, opts: [`Lập kế hoạch Reassign trong Apple Business, sao lưu FileVault recovery keys/bypass codes và chuẩn bị chính sách tương đương trên MDM mới`, `Xóa vĩnh viễn toàn bộ thiết bị khỏi Apple Business`, `Tắt chứng chỉ APNs của hệ thống mạng Apple`, `Yêu cầu mọi nhân viên mang máy ra Apple Store`], ans: 0, exp: `Migration cần kế hoạch rõ ràng: export recovery keys, reassign trong Apple Business và tái đăng ký có kiểm soát.` },
+  { ch: 14, vi: `Công cụ dòng lệnh nào trên macOS cho phép thu thập toàn bộ log chẩn đoán hệ thống khi cần báo cáo lỗi triển khai lên AppleCare Enterprise?`, en: `Which macOS command-line tool collects comprehensive system diagnostic logs for AppleCare Enterprise troubleshooting?`, opts: [`sysdiagnose`, `ping`, `mkdir`, `defaults read`], ans: 0, exp: `sudo sysdiagnose thu thập log hệ thống, MDM, network và crash logs theo chuẩn của Apple.` },
+  { ch: 14, vi: `Trong Apple Platform Deployment, tại sao không nên kết hợp hai SSO Extension cùng xử lý một tên miền định danh?`, en: `Why should two SSO extensions not target the same identity domain on macOS?`, opts: [`Gây xung đột điều hướng xác thực; mỗi domain chỉ nên được xử lý bởi đúng một SSO Extension`, `Vì macOS chỉ cho phép cài tối đa 1 ứng dụng trình duyệt`, `Vì làm hỏng cổng USB-C DFU`, `Vì Content Caching sẽ ngừng hoạt động`], ans: 0, exp: `Apple quy định một domain cụ thể chỉ sử dụng một SSO Extension duy nhất.` },
+  { ch: 14, vi: `Loại chứng chỉ nào trên Apple Business có thời hạn 1 năm và phải kiểm tra nhắc lịch gia hạn định kỳ để tránh đứt gãy toàn bộ hệ thống MDM?`, en: `Which certificate/token linked with Apple Business expires annually and requires timely renewal to prevent MDM disruption?`, opts: [`APNs Push Certificate (và Server/Content Tokens)`, `Số Serial phần cứng của MacBook`, `Tài khoản quản trị viên cục bộ (Local Admin)`, `Địa chỉ MAC của card Ethernet`], ans: 0, exp: `Cả APNs Push Certificate lẫn ADE/VPP Server Tokens đều có chu kỳ 1 năm cần gia hạn đúng hạn.` },
+  { ch: 14, vi: `Khi một thiết bị Supervised trên iOS 27 không nhận cấu hình mới đẩy từ MDM, nguyên nhân mạng phổ biến nhất là gì?`, en: `If a supervised iOS 27 device fails to receive newly pushed MDM configurations, what is the most common network cause?`, opts: [`Tường lửa chặn kết nối outbound TCP 5223 (hoặc fallback TCP 443) tới mạng APNs 17.0.0.0/8`, `Thiết bị chưa bật AirDrop`, `Người dùng chưa đăng nhập Apple Arcade`, `Chưa cắm cáp USB-C vào máy Mac Host`], ans: 0, exp: `Không có kết nối tới APNs đồng nghĩa thiết bị không nhận được push notification để check-in với MDM server.` }
+];
+
+/* Application State */
+let appState = {
+  mode: `chapter`, // 'chapter' | 'labs' | 'exam'
+  activeChapter: 1,
+  activeTab: `theory`, // 'theory' | 'quiz' | 'exam'
+  completedChapters: [],
+  chapterQuizIdx: {}, // { [chId]: number }
+  chapterQuizSelected: {}, // { [chId_qIdx]: number }
+  bestExamPct: null,
+  examSession: {
+    started: false,
+    finished: false,
+    bilingual: false,
+    currentIdx: 0,
+    answers: {}, // { [qIdx]: optIdx }
+    flagged: [], // array of qIdx
+    secondsLeft: 3600
+  }
+};
+
+let examTimerId = null;
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, `&amp;`)
+    .replace(/</g, `&lt;`)
+    .replace(/>/g, `&gt;`)
+    .replace(/"/g, `&quot;`);
+}
+
+async function saveState() {
+  if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+    try {
+      await window.notebookAppApi.setAppState(appState);
+    } catch (e) {
+      // safe fallback in standalone preview
+    }
+  }
+}
+
+function toggleMobileMenu() {
+  const sb = document.getElementById(`sidebar`);
+  if (sb) sb.classList.toggle(`is-open`);
+}
+
+function closeMobileMenu() {
+  const sb = document.getElementById(`sidebar`);
+  if (sb && window.innerWidth <= 640) sb.classList.remove(`is-open`);
+}
+
+function selectMode(mode, chapterId) {
+  appState.mode = mode;
+  if (mode === `chapter` && chapterId) {
+    appState.activeChapter = chapterId;
+    if (appState.activeTab === `exam`) appState.activeTab = `theory`;
+  }
+  if (mode === `exam`) {
+    appState.activeTab = `exam`;
+  }
+  closeMobileMenu();
+  renderAll();
+  saveState();
+}
+
+function selectTab(tab) {
+  appState.activeTab = tab;
+  if (tab === `exam`) {
+    appState.mode = `exam`;
+  } else if (appState.mode !== `chapter`) {
+    appState.mode = `chapter`;
+  }
+  renderAll();
+  saveState();
+}
+
+function renderSidebar() {
+  const navList = document.getElementById(`chapter-nav-list`);
+  if (!navList) return;
+
+  navList.innerHTML = CHAPTERS.map(ch => {
+    const isActive = appState.mode === `chapter` && appState.activeChapter === ch.id;
+    const isDone = appState.completedChapters.includes(ch.id);
+    return `
+      <button type="button" class="nav-btn ${isActive ? `is-active` : ``}" onclick="selectMode('chapter', ${ch.id})">
+        <span class="nav-num">${ch.id}</span>
+        <span class="nav-title">${esc(ch.title)}</span>
+        ${isDone ? `<span class="nav-check" aria-label="Hoàn thành">&#10003;</span>` : ``}
+      </button>
+    `;
+  }).join(``);
+
+  const labsBtn = document.getElementById(`nav-labs`);
+  const examBtn = document.getElementById(`nav-exam`);
+  if (labsBtn) labsBtn.classList.toggle(`is-active`, appState.mode === `labs`);
+  if (examBtn) examBtn.classList.toggle(`is-active`, appState.mode === `exam`);
+
+  const doneCount = appState.completedChapters.length;
+  const pct = Math.round((doneCount / CHAPTERS.length) * 100);
+  const pText = document.getElementById(`progress-text`);
+  const pFill = document.getElementById(`progress-fill`);
+  const bestEl = document.getElementById(`best-exam-text`);
+  if (pText) pText.textContent = `${doneCount} / ${CHAPTERS.length} chương`;
+  if (pFill) pFill.style.width = `${pct}%`;
+  if (bestEl) bestEl.textContent = appState.bestExamPct !== null ? `${appState.bestExamPct}%` : `Chưa thi`;
+}
+
+function renderHeaderAndTabs() {
+  const eyebrow = document.getElementById(`header-eyebrow`);
+  const title = document.getElementById(`header-title`);
+  const lede = document.getElementById(`header-lede`);
+  const tabTheory = document.getElementById(`tab-theory`);
+  const tabQuiz = document.getElementById(`tab-quiz`);
+  const tabExam = document.getElementById(`tab-exam`);
+
+  if (appState.mode === `labs`) {
+    if (eyebrow) eyebrow.textContent = `Thực hành & Chẩn đoán hệ thống`;
+    if (title) title.textContent = `Labs Command-Line & Diagnostic`;
+    if (lede) lede.textContent = `Mô phỏng kiểm tra cấu hình MDM, Content Caching, Platform SSO, FileVault và APNs trên macOS.`;
+  } else if (appState.mode === `exam` || appState.activeTab === `exam`) {
+    if (eyebrow) eyebrow.textContent = `Pearson VUE Simulator • 60 Câu • 60 Phút • Điểm đạt 75%`;
+    if (title) title.textContent = `Thi thử DEP110 (Apple Certified IT Professional)`;
+    if (lede) lede.textContent = `Môi trường thi thử mô phỏng chuẩn Pearson VUE với tính năng đánh dấu câu hỏi, bảng điều hướng nhanh và chuyển đổi song ngữ Việt–Anh.`;
+  } else {
+    const ch = CHAPTERS.find(c => c.id === appState.activeChapter) || CHAPTERS[0];
+    if (eyebrow) eyebrow.textContent = `Chương ${ch.id} / 14 • ${ch.code}`;
+    if (title) title.textContent = ch.title;
+    if (lede) lede.textContent = ch.lede;
+  }
+
+  if (tabTheory) tabTheory.classList.toggle(`is-active`, appState.mode === `chapter` && appState.activeTab === `theory`);
+  if (tabQuiz) tabQuiz.classList.toggle(`is-active`, appState.mode === `chapter` && appState.activeTab === `quiz`);
+  if (tabExam) tabExam.classList.toggle(`is-active`, appState.mode === `exam` || appState.activeTab === `exam`);
+}
+
+function renderTheoryView(ch) {
+  const isDone = appState.completedChapters.includes(ch.id);
+  const termsHtml = ch.keyTerms.map(t => `<span class="chip">${esc(t)}</span>`).join(``);
+
+  let tableHtml = ``;
+  if (ch.comparisonTable) {
+    const t = ch.comparisonTable;
+    tableHtml = `
+      <div class="tile wide">
+        <h3>${esc(t.title)}</h3>
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>${t.headers.map(h => `<th>${esc(h)}</th>`).join(``)}</tr>
+            </thead>
+            <tbody>
+              ${t.rows.map(r => `<tr>${r.map((cell, i) => `<td class="${i === 0 ? `muted` : ``}">${esc(cell)}</td>`).join(``)}</tr>`).join(``)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  const cardsHtml = ch.cards.map(c => `
+    <article class="tile">
+      <span class="chip orange">${esc(c.badge)}</span>
+      <h3>${esc(c.heading)}</h3>
+      <p>${esc(c.body)}</p>
+      <ul class="bullet-list">
+        ${c.bullets.map(b => `<li>${esc(b)}</li>`).join(``)}
+      </ul>
+    </article>
+  `).join(``);
+
+  return `
+    <div class="btn-row" style="margin-bottom: var(--space-md);">
+      ${termsHtml}
+    </div>
+    <div class="tile-grid">
+      ${tableHtml}
+      ${cardsHtml}
+    </div>
+    <div class="tile wide" style="margin-top: var(--space-lg); flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+      <div>
+        <h3>Hoàn thành nội dung Chương ${ch.id}</h3>
+        <p class="muted">Đánh dấu đã học hoặc chuyển sang làm câu hỏi trắc nghiệm kiểm tra nhanh.</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-secondary" onclick="toggleChapterComplete(${ch.id})">
+          ${isDone ? `Đã hoàn thành ✓ (Nhấn để bỏ)` : `Đánh dấu đã hoàn thành`}
+        </button>
+        <button type="button" class="btn-primary" onclick="selectTab('quiz')">Làm trắc nghiệm bài này</button>
+      </div>
+    </div>
+  `;
+}
+
+function toggleChapterComplete(chId) {
+  const idx = appState.completedChapters.indexOf(chId);
+  if (idx >= 0) {
+    appState.completedChapters.splice(idx, 1);
+  } else {
+    appState.completedChapters.push(chId);
+  }
+  renderAll();
+  saveState();
+}
+
+function renderChapterQuizView(ch) {
+  const qList = ch.quizzes;
+  let qIdx = appState.chapterQuizIdx[ch.id] || 0;
+  if (qIdx >= qList.length) qIdx = 0;
+  const q = qList[qIdx];
+  const key = `${ch.id}_${qIdx}`;
+  const selected = appState.chapterQuizSelected[key];
+  const answered = typeof selected === `number`;
+
+  const letters = [`A`, `B`, `C`, `D`];
+  const optsHtml = q.opts.map((opt, idx) => {
+    let cls = ``;
+    if (answered) {
+      if (idx === q.ans) cls = `is-correct`;
+      else if (idx === selected) cls = `is-wrong`;
+    }
+    return `
+      <button type="button" class="option-card ${cls}" ${answered ? `disabled` : ``} onclick="answerChapterQuiz(${ch.id}, ${qIdx}, ${idx})">
+        <span class="opt-letter">${letters[idx]}</span>
+        <span>${esc(opt)}</span>
+      </button>
+    `;
+  }).join(``);
+
+  let feedbackHtml = ``;
+  if (answered) {
+    const isOk = selected === q.ans;
+    feedbackHtml = `
+      <div class="feedback-box ${isOk ? `ok` : `bad`}">
+        <strong>${isOk ? `Chính xác!` : `Chưa chính xác.`}</strong>
+        <p style="margin-top: var(--space-xs);">${esc(q.exp)}</p>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="quiz-shell">
+      <div class="tile">
+        <div class="question-meta">
+          <span class="chip">Câu ${qIdx + 1} / ${qList.length} • Chương ${ch.id}</span>
+          <button type="button" class="btn-secondary" onclick="resetChapterQuiz(${ch.id})">Làm lại bài tập</button>
+        </div>
+        <h2 class="question-prompt">${esc(q.q)}</h2>
+        <div class="options-stack">
+          ${optsHtml}
+        </div>
+        ${feedbackHtml}
+        <div class="btn-row" style="justify-content: space-between; margin-top: var(--space-sm);">
+          <button type="button" class="btn-secondary" ${qIdx === 0 ? `disabled` : ``} onclick="moveChapterQuiz(${ch.id}, -1)">Câu trước</button>
+          <button type="button" class="btn-primary" ${qIdx >= qList.length - 1 ? `disabled` : ``} onclick="moveChapterQuiz(${ch.id}, 1)">Câu tiếp theo</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function answerChapterQuiz(chId, qIdx, optIdx) {
+  appState.chapterQuizSelected[`${chId}_${qIdx}`] = optIdx;
+  const ch = CHAPTERS.find(c => c.id === chId);
+  if (ch) {
+    const allAnswered = ch.quizzes.every((_, i) => typeof appState.chapterQuizSelected[`${chId}_${i}`] === `number`);
+    if (allAnswered && !appState.completedChapters.includes(chId)) {
+      appState.completedChapters.push(chId);
+    }
+  }
+  renderAll();
+  saveState();
+}
+
+function moveChapterQuiz(chId, delta) {
+  const ch = CHAPTERS.find(c => c.id === chId);
+  if (!ch) return;
+  const cur = appState.chapterQuizIdx[chId] || 0;
+  const next = Math.max(0, Math.min(ch.quizzes.length - 1, cur + delta));
+  appState.chapterQuizIdx[chId] = next;
+  renderAll();
+  saveState();
+}
+
+function resetChapterQuiz(chId) {
+  const ch = CHAPTERS.find(c => c.id === chId);
+  if (ch) {
+    ch.quizzes.forEach((_, i) => {
+      delete appState.chapterQuizSelected[`${chId}_${i}`];
+    });
+    appState.chapterQuizIdx[chId] = 0;
+  }
+  renderAll();
+  saveState();
+}
+
+/* Labs View */
+let activeLabId = LABS_DATA[0].id;
+let customCmdOutput = ``;
+
+function renderLabsView() {
+  const activeLab = LABS_DATA.find(l => l.id === activeLabId) || LABS_DATA[0];
+  return `
+    <div class="tile-grid">
+      <div class="tile wide">
+        <span class="chip">Interactive Diagnostic Console</span>
+        <h3>Thực hành lệnh kiểm tra hệ thống macOS</h3>
+        <p class="muted">Chọn một kịch bản hoặc nhập lệnh (<span class="mono">profiles</span>, <span class="mono">AssetCacheManagerUtil</span>, <span class="mono">app-sso</span>, <span class="mono">fdesetup</span>, <span class="mono">nc</span>) để xem kết quả chẩn đoán thực tế.</p>
+        <div class="btn-row" style="margin-top: var(--space-xs);">
+          ${LABS_DATA.map(l => `
+            <button type="button" class="${l.id === activeLab.id ? `btn-primary` : `btn-secondary`}" onclick="runPresetLab('${l.id}')">${esc(l.title)}</button>
+          `).join(``)}
+        </div>
+        <div class="lab-input-row" style="margin-top: var(--space-sm);">
+          <div class="field-group">
+            <label for="lab-cmd-input">Lệnh Terminal macOS</label>
+            <input type="text" id="lab-cmd-input" class="field-input" value="${esc(activeLab.cmd)}">
+          </div>
+          <button type="button" class="btn-primary" onclick="executeCustomLab()">Chạy lệnh kiểm tra</button>
+        </div>
+        <div class="terminal-box" id="lab-terminal-out">$ ${esc(activeLab.cmd)}\n\n${esc(customCmdOutput || activeLab.sampleOut)}</div>
+        <p><strong>Phân tích kỹ thuật:</strong> ${esc(activeLab.explain)}</p>
+      </div>
+
+      <div class="tile">
+        <span class="chip orange">Hardware Recovery</span>
+        <h3>Checklist đưa Mac vào DFU Mode</h3>
+        <ul class="bullet-list">
+          <li>Chuẩn bị máy Host Mac đang chạy macOS mới nhất và kết nối Internet.</li>
+          <li>Dùng cáp USB-C hỗ trợ data + charge (KHÔNG dùng cáp Thunderbolt 3, không qua hub).</li>
+          <li>Cắm đúng cổng DFU trên máy Mac lỗi, rút mọi thiết bị USB khác.</li>
+          <li>MacBook Apple Silicon: Giữ <span class="mono">Control(L)+Option(L)+Shift(R)+Power</span> 10s → thả 3 phím, giữ tiếp <span class="mono">Power</span> 10s.</li>
+          <li>Trong Finder trên máy Host: luôn thử <strong>Revive Mac</strong> trước khi dùng <strong>Restore Mac</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="tile">
+        <span class="chip green">Network Firewall</span>
+        <h3>Checklist Port mạng Doanh nghiệp</h3>
+        <ul class="bullet-list">
+          <li><span class="mono">TCP 5223</span> outbound tới <span class="mono">17.0.0.0/8</span> (APNs Push Notifications).</li>
+          <li><span class="mono">TCP 443</span> outbound tới <span class="mono">*.apple.com</span> (ADE, Apple Business, Software Update, ACME).</li>
+          <li><span class="mono">TCP 443</span> fallback APNs khi proxy chặn 5223.</li>
+          <li>Kiểm tra <span class="mono">AssetCacheManagerUtil</span> trên Mac Ethernet đơn lẻ để xác nhận Content Caching đang hoạt động.</li>
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function runPresetLab(id) {
+  activeLabId = id;
+  customCmdOutput = ``;
+  renderAll();
+}
+
+function executeCustomLab() {
+  const input = document.getElementById(`lab-cmd-input`);
+  if (!input) return;
+  const cmd = input.value.trim().toLowerCase();
+  if (!cmd) {
+    customCmdOutput = `Lỗi: Vui lòng nhập một câu lệnh macOS hợp lệ để mô phỏng.`;
+  } else if (cmd.includes(`profiles`)) {
+    customCmdOutput = LABS_DATA[0].sampleOut;
+  } else if (cmd.includes(`assetcache`)) {
+    customCmdOutput = LABS_DATA[1].sampleOut;
+  } else if (cmd.includes(`app-sso`)) {
+    customCmdOutput = LABS_DATA[2].sampleOut;
+  } else if (cmd.includes(`fdesetup`) || cmd.includes(`sysadminctl`)) {
+    customCmdOutput = LABS_DATA[3].sampleOut;
+  } else if (cmd.includes(`nc `) || cmd.includes(`5223`)) {
+    customCmdOutput = LABS_DATA[4].sampleOut;
+  } else if (cmd.includes(`sysdiagnose`)) {
+    customCmdOutput = `Generating sysdiagnose archive at /var/tmp/sysdiagnose_2026.11.15.tar.gz ... Done.`;
+  } else {
+    customCmdOutput = `Đã thực thi '${cmd}' trong sandbox mô phỏng. Gợi ý các lệnh hỗ trợ: profiles, AssetCacheManagerUtil, app-sso, fdesetup, nc -vz gateway.push.apple.com 5223, sysdiagnose.`;
+  }
+  const term = document.getElementById(`lab-terminal-out`);
+  if (term) term.textContent = `$ ${input.value.trim()}\n\n${customCmdOutput}`;
+}
+
+/* Exam Simulator */
+function formatTimer(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${String(m).padStart(2, `0`)}:${String(s).padStart(2, `0`)}`;
+}
+
+function startExamTimer() {
+  stopExamTimer();
+  examTimerId = setInterval(() => {
+    if (!appState.examSession.started || appState.examSession.finished) {
+      stopExamTimer();
+      return;
+    }
+    appState.examSession.secondsLeft = Math.max(0, appState.examSession.secondsLeft - 1);
+    const tEl = document.getElementById(`exam-timer-pill`);
+    if (tEl) {
+      tEl.textContent = formatTimer(appState.examSession.secondsLeft);
+      tEl.classList.toggle(`urgent`, appState.examSession.secondsLeft <= 300);
+    }
+    if (appState.examSession.secondsLeft === 0) {
+      finishExam();
+    }
+  }, 1000);
+}
+
+function stopExamTimer() {
+  if (examTimerId) {
+    clearInterval(examTimerId);
+    examTimerId = null;
+  }
+}
+
+function startExamSession() {
+  appState.examSession = {
+    started: true,
+    finished: false,
+    bilingual: appState.examSession.bilingual || false,
+    currentIdx: 0,
+    answers: {},
+    flagged: [],
+    secondsLeft: 3600
+  };
+  startExamTimer();
+  renderAll();
+  saveState();
+}
+
+function toggleBilingual() {
+  appState.examSession.bilingual = !appState.examSession.bilingual;
+  renderAll();
+  saveState();
+}
+
+function jumpExamQuestion(idx) {
+  appState.examSession.currentIdx = idx;
+  renderAll();
+  saveState();
+}
+
+function selectExamAnswer(qIdx, optIdx) {
+  if (appState.examSession.finished) return;
+  appState.examSession.answers[qIdx] = optIdx;
+  renderAll();
+  saveState();
+}
+
+function toggleFlagQuestion(qIdx) {
+  const list = appState.examSession.flagged;
+  const pos = list.indexOf(qIdx);
+  if (pos >= 0) list.splice(pos, 1);
+  else list.push(qIdx);
+  renderAll();
+  saveState();
+}
+
+let finishArmed = false;
+function confirmFinishExam(btn) {
+  if (!finishArmed) {
+    finishArmed = true;
+    btn.textContent = `Nhấn lại lần nữa để Nộp bài`;
+    return;
+  }
+  finishArmed = false;
+  finishExam();
+}
+
+function finishExam() {
+  stopExamTimer();
+  appState.examSession.finished = true;
+  let correct = 0;
+  EXAM_BANK.forEach((q, idx) => {
+    if (appState.examSession.answers[idx] === q.ans) correct++;
+  });
+  const pct = Math.round((correct / EXAM_BANK.length) * 100);
+  if (appState.bestExamPct === null || pct > appState.bestExamPct) {
+    appState.bestExamPct = pct;
+  }
+  renderAll();
+  saveState();
+}
+
+function renderExamView() {
+  const es = appState.examSession;
+  if (!es.started) {
+    return `
+      <div class="tile-grid">
+        <div class="tile wide">
+          <span class="chip">Pearson VUE Exam Engine</span>
+          <h2>Bài thi thử DEP110 — Apple Certified IT Professional</h2>
+          <p>Mô phỏng sát cấu trúc đề thi chuẩn Apple Platform Deployment &amp; Management:</p>
+          <div class="score-grid" style="margin: var(--space-md) 0;">
+            <div class="figure-tile">
+              <div class="figure-val">60</div>
+              <div class="figure-cap">Câu hỏi trắc nghiệm</div>
+            </div>
+            <div class="figure-tile">
+              <div class="figure-val">60:00</div>
+              <div class="figure-cap">Thời gian làm bài</div>
+            </div>
+            <div class="figure-tile">
+              <div class="figure-val">75%</div>
+              <div class="figure-cap">Điểm đạt (45/60 câu)</div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn-primary" onclick="startExamSession()">Bắt đầu làm bài thi thử</button>
+            <button type="button" class="btn-secondary" onclick="toggleBilingual()">
+              Chế độ song ngữ VN–EN: ${es.bilingual ? `Đang BẬT` : `Đang TẮT`}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  let correctCount = 0;
+  let answeredCount = 0;
+  EXAM_BANK.forEach((q, i) => {
+    if (typeof es.answers[i] === `number`) {
+      answeredCount++;
+      if (es.answers[i] === q.ans) correctCount++;
+    }
+  });
+  const scorePct = Math.round((correctCount / EXAM_BANK.length) * 100);
+  const passed = scorePct >= 75;
+
+  const qIdx = es.currentIdx;
+  const q = EXAM_BANK[qIdx];
+  const userAns = es.answers[qIdx];
+  const isFlagged = es.flagged.includes(qIdx);
+  const letters = [`A`, `B`, `C`, `D`];
+
+  let resultBanner = ``;
+  if (es.finished) {
+    resultBanner = `
+      <div class="tile wide" style="margin-bottom: var(--space-md); border-left: 6px solid ${passed ? `var(--positive)` : `var(--error)`};">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+          <div>
+            <span class="chip ${passed ? `green` : `red`}">${passed ? `ĐẠT CHỨNG CHỈ (PASS)` : `CHƯA ĐẠT (FAIL)`}</span>
+            <h2 style="margin-top: var(--space-xs);">Kết quả: ${correctCount} / ${EXAM_BANK.length} câu (${scorePct}%)</h2>
+            <p class="muted">Ngưỡng đạt yêu cầu của Apple là 75% (tối thiểu 45/60 câu đúng). Chọn từng số câu bên phải để xem giải thích chi tiết.</p>
+          </div>
+          <button type="button" class="btn-primary" onclick="startExamSession()">Thi lại đề mới</button>
+        </div>
+      </div>
+    `;
+  }
+
+  const optsHtml = q.opts.map((opt, idx) => {
+    let cls = ``;
+    if (es.finished) {
+      if (idx === q.ans) cls = `is-correct`;
+      else if (idx === userAns) cls = `is-wrong`;
+    } else if (idx === userAns) {
+      cls = `is-selected`;
+    }
+    return `
+      <button type="button" class="option-card ${cls}" ${es.finished ? `disabled` : ``} onclick="selectExamAnswer(${qIdx}, ${idx})">
+        <span class="opt-letter">${letters[idx]}</span>
+        <span>${esc(opt)}</span>
+      </button>
+    `;
+  }).join(``);
+
+  const gridHtml = EXAM_BANK.map((_, i) => {
+    const cls = [
+      `q-node`,
+      i === qIdx ? `is-current` : ``,
+      es.flagged.includes(i) ? `is-flagged` : ``,
+      es.finished
+        ? (es.answers[i] === EXAM_BANK[i].ans ? `is-right` : `is-wrong`)
+        : (typeof es.answers[i] === `number` ? `is-answered` : ``)
+    ].join(` `);
+    return `<button type="button" class="${cls}" onclick="jumpExamQuestion(${i})">${i + 1}</button>`;
+  }).join(``);
+
+  return `
+    ${resultBanner}
+    <div class="exam-topbar" style="margin-bottom: var(--space-md);">
+      <div class="btn-row">
+        <strong>Câu ${qIdx + 1} / ${EXAM_BANK.length}</strong>
+        <span class="chip">Đã trả lời: ${answeredCount}/60</span>
+        <span class="chip orange">Đánh dấu: ${es.flagged.length}</span>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-secondary" onclick="toggleBilingual()">
+          ${es.bilingual ? `VN + EN` : `Tiếng Việt`}
+        </button>
+        <div class="timer-pill ${es.secondsLeft <= 300 ? `urgent` : ``}" id="exam-timer-pill">
+          ${es.finished ? `Đã nộp bài` : formatTimer(es.secondsLeft)}
+        </div>
+        ${!es.finished ? `<button type="button" class="btn-primary" onclick="confirmFinishExam(this)">Nộp bài</button>` : ``}
+      </div>
+    </div>
+
+    <div class="exam-layout">
+      <div class="tile">
+        <div class="question-meta">
+          <span class="chip">Chương ${q.ch}</span>
+          <button type="button" class="btn-secondary ${isFlagged ? `is-flagged` : ``}" onclick="toggleFlagQuestion(${qIdx})">
+            ${isFlagged ? `Đã gắn cờ xem lại` : `Gắn cờ (Flag)`}
+          </button>
+        </div>
+        <h2 class="question-prompt">${esc(q.vi)}</h2>
+        ${es.bilingual ? `<p class="muted" style="font-style: italic;">EN: ${esc(q.en)}</p>` : ``}
+        <div class="options-stack">
+          ${optsHtml}
+        </div>
+        ${es.finished ? `
+          <div class="feedback-box ${userAns === q.ans ? `ok` : `bad`}">
+            <strong>Đáp án đúng: ${letters[q.ans]}</strong>
+            <p style="margin-top: var(--space-xs);">${esc(q.exp)}</p>
+          </div>
+        ` : ``}
+        <div class="btn-row" style="justify-content: space-between; margin-top: var(--space-sm);">
+          <button type="button" class="btn-secondary" ${qIdx === 0 ? `disabled` : ``} onclick="jumpExamQuestion(${qIdx - 1})">Câu trước</button>
+          <button type="button" class="btn-primary" ${qIdx >= EXAM_BANK.length - 1 ? `disabled` : ``} onclick="jumpExamQuestion(${qIdx + 1})">Câu tiếp</button>
+        </div>
+      </div>
+
+      <aside class="tile" aria-label="Bảng điều hướng câu hỏi">
+        <h3>Bảng điều hướng (60 câu)</h3>
+        <p class="muted" style="font-size: 0.8125rem;">Chấm cam góc phải biểu thị câu đã gắn cờ.</p>
+        <div class="q-grid">
+          ${gridHtml}
+        </div>
+      </aside>
+    </div>
+  `;
+}
+
+function renderAll() {
+  renderSidebar();
+  renderHeaderAndTabs();
+  const root = document.getElementById(`content-root`);
+  if (!root) return;
+
+  if (appState.mode === `labs`) {
+    root.innerHTML = renderLabsView();
+  } else if (appState.mode === `exam` || appState.activeTab === `exam`) {
+    root.innerHTML = renderExamView();
+  } else {
+    const ch = CHAPTERS.find(c => c.id === appState.activeChapter) || CHAPTERS[0];
+    if (appState.activeTab === `quiz`) {
+      root.innerHTML = renderChapterQuizView(ch);
+    } else {
+      root.innerHTML = renderTheoryView(ch);
+    }
+  }
+}
+
+async function initApp() {
+  if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+    try {
+      const saved = await window.notebookAppApi.getAppState();
+      if (saved && typeof saved === `object`) {
+        appState = Object.assign({}, appState, saved);
+        if (saved.examSession) {
+          appState.examSession = Object.assign({}, appState.examSession, saved.examSession);
+        }
+      }
+    } catch (e) {
+      // ignore if empty
+    }
+  }
+
+  renderAll();
+
+  if (appState.examSession.started && !appState.examSession.finished && (appState.mode === `exam` || appState.activeTab === `exam`)) {
+    startExamTimer();
+  }
+
+  if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+    window.notebookAppApi.notifyAppReady();
+  }
+}
+
+window.addEventListener(`DOMContentLoaded`, initApp);
+</script>
+</body>
+</html>
