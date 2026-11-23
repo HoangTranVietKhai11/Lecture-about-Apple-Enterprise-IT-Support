@@ -217,7 +217,7 @@ export async function POST(req: NextRequest) {
           `User Query: ${message}`;
 
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -229,7 +229,7 @@ export async function POST(req: NextRequest) {
                 },
               ],
               generationConfig: {
-                maxOutputTokens: 500,
+                maxOutputTokens: 1024,
                 temperature: 0.3,
               },
             }),
