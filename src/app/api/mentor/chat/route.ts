@@ -60,6 +60,24 @@ function generateBuiltInMentorResponse(
   const correctAns = context?.correctAnswer || '';
   const topic = (context?.context || '').toLowerCase();
 
+  // 0. Greetings & capability questions
+  if (
+    lowerMsg.includes('làm gì') ||
+    lowerMsg.includes('là ai') ||
+    lowerMsg.includes('giúp gì') ||
+    lowerMsg.includes('chức năng') ||
+    /^(hi|hello|chào|xin chào)\b/.test(lowerMsg.trim())
+  ) {
+    return `Chào bạn! Tôi là **Apple Deployment Mentor** — trợ lý AI chuyên về **Apple Enterprise Management** và luyện thi chứng chỉ **DEP110**.
+
+Tôi có thể giúp bạn:
+• **Giải thích câu hỏi trắc nghiệm & bài thi**: Phân tích vì sao đáp án này đúng và đáp án kia sai theo chuẩn Pearson VUE.
+• **So sánh cơ chế Apple MDM**: Làm rõ ranh giới giữa **Configuration Profile** và **Jamf Policy**, **ADE Supervision**, **Platform SSO**, và **DDM**.
+• **Hỗ trợ Lab Terminal macOS**: Hướng dẫn các lệnh chẩn đoán như \`profiles status\`, \`fdesetup status\`, \`sudo jamf policy\`.
+
+Bạn đang muốn hỏi về chủ đề nào hoặc cần giải thích câu hỏi nào?`;
+  }
+
   // 1. Context-based Quiz / Exam Question Explanation
   if (context && context.question) {
     if (qText.includes('wifi') || qText.includes('wi-fi') || qText.includes('policy') || qText.includes('profile')) {

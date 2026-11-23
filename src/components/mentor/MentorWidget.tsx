@@ -87,9 +87,9 @@ export const MentorWidget: React.FC = () => {
             return <div key={idx} className="h-1" />;
           }
 
-          // Bullet points
-          if (line.trim().startsWith('•') || line.trim().startsWith('*') || line.trim().startsWith('-')) {
-            const cleanText = line.replace(/^[\s•*-]+/, '').trim();
+          // Bullet points (strip only a single leading bullet marker + space so **bold** is preserved)
+          if (/^\s*(•|\*|-)\s+/.test(line)) {
+            const cleanText = line.replace(/^\s*(?:•|\*|-)\s+/, '').trim();
             return (
               <div key={idx} className="flex items-start gap-2 pl-1">
                 <span className="text-secondary select-none font-bold text-[10px] pt-0.5">•</span>
