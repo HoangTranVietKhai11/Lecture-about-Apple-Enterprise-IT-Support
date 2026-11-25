@@ -4,7 +4,7 @@ import React from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { LanguageToggle } from './LanguageToggle';
 import { ThemeToggle } from './ThemeToggle';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Smartphone } from 'lucide-react';
 
 interface HeaderProps {
   title?: string;
@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ title, eyebrow, subtitle }) => {
-  const { language, resetAllProgress } = useAppStore();
+  const { language, resetAllProgress, setSyncModalOpen } = useAppStore();
   const isVi = language === 'vi';
 
   const handleReset = () => {
@@ -41,6 +41,15 @@ export const Header: React.FC<HeaderProps> = ({ title, eyebrow, subtitle }) => {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
+        <button
+          type="button"
+          onClick={() => setSyncModalOpen(true)}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-xs font-medium"
+          title={isVi ? 'Đồng bộ tiến độ giữa Điện thoại và Máy tính' : 'Sync progress across Phone and PC'}
+        >
+          <Smartphone className="w-3.5 h-3.5" />
+          <span>{isVi ? 'Đồng bộ' : 'Sync'}</span>
+        </button>
         <LanguageToggle />
         <ThemeToggle />
         <button

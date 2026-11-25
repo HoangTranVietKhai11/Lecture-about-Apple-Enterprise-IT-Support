@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  Smartphone,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -24,7 +25,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = () => {
   const pathname = usePathname();
-  const { completedChapters, bestExamPct, language, setActiveChapter } = useAppStore();
+  const { completedChapters, bestExamPct, language, setActiveChapter, setSyncModalOpen } = useAppStore();
   const { toggleOpen: toggleMentor } = useMentorStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -82,6 +83,17 @@ export const Sidebar: React.FC<SidebarProps> = () => {
             {mounted && bestExamPct !== null ? `${bestExamPct}%` : isVi ? 'Chưa thi' : 'None'}
           </span>
         </div>
+        <button
+          type="button"
+          onClick={() => {
+            setMobileOpen(false);
+            setSyncModalOpen(true);
+          }}
+          className="mt-0.5 inline-flex items-center justify-center gap-1.5 w-full px-2.5 py-1.5 rounded bg-sidebar hover:bg-surface-high border border-border text-[11px] font-medium text-foreground transition-colors"
+        >
+          <Smartphone className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+          <span>{isVi ? 'Đồng bộ Điện thoại ↔ PC' : 'Sync Phone ↔ PC'}</span>
+        </button>
       </div>
 
       {/* Core Modules Navigation */}

@@ -83,3 +83,9 @@ model UserAnswer {
   selectedIds String[]
   isCorrect   Boolean
 }
+
+model ProgressSnapshot {
+  syncKey   String   @id
+  payload   Json
+  updatedAt DateTime @updatedAt
+}

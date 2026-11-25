@@ -169,3 +169,17 @@ export interface MentorMessage {
   timestamp: number;
 }
 
+export type SyncMode = 'MERGE' | 'REPLACE';
+
+export interface SyncPayload {
+  version: number;
+  exportedAt: string;
+  completedChapters: number[];
+  completedMissions: string[];
+  masteredTerms: string[];
+  chapterNotes: Record<number, string>;
+  solvedLabs: string[];
+  bestExamPct: number | null;
+  examHistory: ExamAttemptRecord[];
+}
+

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Sidebar } from '@/components/layout/Sidebar';
+import { SyncModal } from '@/components/layout/SyncModal';
 import { MentorWidget } from '@/components/mentor/MentorWidget';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        <SyncModal />
         <MentorWidget />
       </body>
     </html>
